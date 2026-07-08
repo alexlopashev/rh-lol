@@ -81,6 +81,8 @@ Acceptance:
 - Definitions compile independently of the hardest analytic theorem.
 - The dependency graph makes the missing research theorem visible.
 
+Status: started in [#6](https://github.com/alexlopashev/rh-lol/issues/6) with a minimal `RHLean.Jensen.Polynomial` module and the named bridge `JensenHyperbolicityToLaguerrePolyaXi`.
+
 ## Milestone 6: Total Positivity Route
 
 Deliverables:

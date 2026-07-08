@@ -4,6 +4,7 @@ Released under MIT license as described in the file LICENSE.
 Authors: Sasha Lopashev
 -/
 import RHLean.CriticalLine
+import RHLean.Jensen.Polynomial
 import RHLean.LaguerrePolya.Certificate
 import RHLean.RHBridge
 import RHLean.ZetaXi
