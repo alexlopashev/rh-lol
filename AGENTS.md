@@ -49,7 +49,7 @@ If Lean is not installed locally, record that explicitly in the PR or handoff an
 Use the project profile at:
 
 ```text
-/Users/sasha/Documents/agentic-skills/skills/project-profile/references/rh-lol.md
+skills/project-profile/references/rh-lol.md
 ```
 
 For automation runs, prefer GitHub issues labeled `status:ready`, then highest priority. Keep issues PR-sized and state acceptance criteria that can be checked by Lean, CI, or a precise documentation diff.

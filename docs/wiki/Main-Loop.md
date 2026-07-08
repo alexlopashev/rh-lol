@@ -3,14 +3,14 @@
 Project profile:
 
 ```text
-/Users/sasha/Documents/agentic-skills/skills/project-profile/references/rh-lol.md
+skills/project-profile/references/rh-lol.md
 ```
 
 Suggested scheduled prompt:
 
 ```text
 Use $project-main-loop.
-Read project profile: /Users/sasha/Documents/agentic-skills/skills/project-profile/references/rh-lol.md.
+Read project profile: skills/project-profile/references/rh-lol.md.
 Run exactly one coordination loop.
 ```
 
