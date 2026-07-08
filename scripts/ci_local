@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+scripts/lint_text
+
+if ! command -v lake >/dev/null 2>&1; then
+  echo "lake was not found. Install elan, reopen the shell, then rerun scripts/ci_local." >&2
+  echo "See https://github.com/leanprover/elan for installation instructions." >&2
+  exit 127
+fi
+
+lake exe cache get
+lake build
+lake lint RHLean -- --warnings-as-errors

@@ -1,2 +1,13 @@
-# cache and other artifacts produced by Lean's Lake build tool
+# Cache and other artifacts produced by Lean's Lake build tool.
 .lake/
+lake-packages/
+
+# Local editor and OS noise.
+.DS_Store
+*.swp
+*.swo
+
+# Generated Lean artifacts should live under .lake, not source control.
+*.olean
+*.ilean
+*.c

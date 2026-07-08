@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+lean_files=(RHLean.lean)
+while IFS= read -r file; do
+  lean_files+=("$file")
+done < <(find RHLean -name '*.lean' -print | sort)
+
+if rg -n '\b(sorry|admit|axiom|unsafe)\b' "${lean_files[@]}"; then
+  echo "Lean sources must not contain sorry, admit, axiom, or unsafe." >&2
+  exit 1
+fi
+
+if rg -n '[[:blank:]]$' . --glob '!LICENSE' --glob '!.git/**'; then
+  echo "Trailing whitespace is not allowed." >&2
+  exit 1
+fi
+
+for file in "${lean_files[@]}"; do
+  if ! head -n 6 "$file" | rg -q 'Copyright \(c\) 2026 Sasha Lopashev'; then
+    echo "$file is missing the project copyright header." >&2
+    exit 1
+  fi
+done
+
+echo "Text lint passed."

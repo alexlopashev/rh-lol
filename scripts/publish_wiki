@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_url="${1:-https://github.com/alexlopashev/rh-lol.wiki.git}"
+workdir="${TMPDIR:-/tmp}/rh-lol-wiki"
+
+rm -rf "$workdir"
+git clone "$repo_url" "$workdir"
+rsync -a --delete docs/wiki/ "$workdir/"
+
+git -C "$workdir" add .
+if git -C "$workdir" diff --cached --quiet; then
+  echo "Wiki already up to date."
+  exit 0
+fi
+
+git -C "$workdir" commit -m "Seed RHLean wiki"
+git -C "$workdir" push origin HEAD:master

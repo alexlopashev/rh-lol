@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Text lint
+        run: scripts/lint_text
+
+      - name: Lean build and lint
+        uses: leanprover/lean-action@v1
+        with:
+          build: true
+          lint: true

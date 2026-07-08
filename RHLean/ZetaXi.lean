@@ -1,0 +1,38 @@
+/-
+Copyright (c) 2026 Sasha Lopashev. All rights reserved.
+Released under MIT license as described in the file LICENSE.
+Authors: Sasha Lopashev
+-/
+import Mathlib.NumberTheory.LSeries.RiemannZeta
+
+/-!
+# The completed zeta and critical-line transform
+
+This file defines the Riemann xi function through Mathlib's
+`completedRiemannZeta₀`, and the critical-line transform
+`Xi z = xi (1 / 2 + I * z)`.
+-/
+
+noncomputable section
+
+namespace RHLean
+
+open Complex
+
+/-- The Riemann xi function, expressed using Mathlib's entire `completedRiemannZeta₀`.
+
+Mathlib has `completedRiemannZeta s = completedRiemannZeta₀ s - 1 / s - 1 / (1 - s)`.
+Multiplying by `s * (s - 1)` cancels the polar correction terms and yields the usual
+normalization `1 / 2 * (s * (s - 1) * completedRiemannZeta₀ s + 1)`.
+-/
+def xi (s : Complex) : Complex :=
+  (1 / 2 : Complex) * (s * (s - 1) * completedRiemannZeta₀ s + 1)
+
+/-- The real-line model of xi on the critical line.
+
+Zeros of `Xi` with real input correspond to zeros of `xi` on `re s = 1 / 2`.
+-/
+def Xi (z : Complex) : Complex :=
+  xi ((1 / 2 : Complex) + Complex.I * z)
+
+end RHLean
