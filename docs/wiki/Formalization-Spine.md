@@ -14,7 +14,9 @@ Current core objects:
 - `AllZerosReal : (Complex -> Complex) -> Prop`
 - `CompletedZetaZerosTransferToXi : Prop`
 - `ZetaZerosTransferToXi : CompletedZetaZerosTransferToXi -> ...`
-- `LaguerrePolyaCertificate : (Complex -> Complex) -> Prop`
+- `LaguerrePolyaClass : (Complex -> Complex) -> Type`
+- `LaguerrePolyaZerosRealTheorem : Prop`
+- `LaguerrePolyaCertificate : (Complex -> Complex) -> Type`
 
 Current bridge theorem:
 
@@ -27,11 +29,24 @@ theorem RH_of_Xi_real_zeros
 
 `CompletedZetaZerosTransferToXi` is the remaining named analytic transfer from completed zeta zeros to `Xi` zeros. It is a visible scaffold hypothesis, not a proof of RH.
 
-The current certificate is intentionally thin:
+The Laguerre-Polya interface is an analytic closure statement:
 
 ```lean
-structure LaguerrePolyaCertificate (F : Complex -> Complex) : Prop where
-  zeros_real : AllZerosReal F
+structure LaguerrePolyaClass (F : Complex -> Complex) : Prop where
+  entire : AnalyticOnNhd Complex F Set.univ
+  real_on_real : forall x : Real, (F (x : Complex)).im = 0
+  approximants : Nat -> Polynomial Complex
+  approximants_real_rooted : forall n : Nat, RealRootedPolynomial (approximants n)
+  locally_uniform_limit :
+    TendstoLocallyUniformlyOn
+      (fun (n : Nat) (z : Complex) => (approximants n).eval z) F Filter.atTop Set.univ
 ```
 
-This is a scaffolding contract. It must be replaced by real Laguerre-Polya definitions after the first RH bridge compiles.
+The hard closure theorem is still explicit:
+
+```lean
+def LaguerrePolyaZerosRealTheorem : Prop :=
+  forall {F : Complex -> Complex}, LaguerrePolyaClass F -> AllZerosReal F
+```
+
+`LaguerrePolyaCertificate` packages membership in this class with that named theorem. It is not a direct wrapper around `AllZerosReal`.

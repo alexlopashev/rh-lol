@@ -26,7 +26,7 @@ Initial formal spine:
 - `RHLean.ZetaXi`: defines `xi` and `Xi`.
 - `RHLean.CriticalLine`: defines zeta-zero predicates and the critical-line coordinate lemma.
 - `RHLean.RHBridge`: proves `RH_of_Xi_real_zeros` from explicit transfer and real-zero hypotheses.
-- `RHLean.LaguerrePolya.Certificate`: provides a temporary certificate interface for future replacement.
+- `RHLean.LaguerrePolya.Certificate`: defines the Laguerre-Polya class interface and the named theorem needed to turn membership into real zeros.
 
 ## Setup
 
