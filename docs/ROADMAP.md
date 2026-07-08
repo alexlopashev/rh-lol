@@ -95,3 +95,5 @@ Acceptance:
 
 - The route is available as an alternative dependency branch.
 - It does not duplicate Jensen definitions unless the math demands it.
+
+Status: started in [#7](https://github.com/alexlopashev/rh-lol/issues/7) with a minimal `RHLean.TotalPositivity.PFSequence` module and the named bridge `TotalPositivityToLaguerrePolyaXi`.

@@ -27,4 +27,6 @@ Core Lean source:
 - `RHLean/ZetaXi.lean`
 - `RHLean/CriticalLine.lean`
 - `RHLean/RHBridge.lean`
+- `RHLean/Jensen/Polynomial.lean`
 - `RHLean/LaguerrePolya/Certificate.lean`
+- `RHLean/TotalPositivity/PFSequence.lean`
