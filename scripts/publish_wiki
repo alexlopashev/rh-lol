@@ -6,7 +6,7 @@ workdir="${TMPDIR:-/tmp}/rh-lol-wiki"
 
 rm -rf "$workdir"
 git clone "$repo_url" "$workdir"
-rsync -a --delete docs/wiki/ "$workdir/"
+rsync -a --delete --exclude .git docs/wiki/ "$workdir/"
 
 git -C "$workdir" add .
 if git -C "$workdir" diff --cached --quiet; then
