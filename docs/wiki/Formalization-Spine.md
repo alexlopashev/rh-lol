@@ -17,6 +17,8 @@ Current core objects:
 - `LaguerrePolyaClass : (Complex -> Complex) -> Type`
 - `LaguerrePolyaZerosRealTheorem : Prop`
 - `LaguerrePolyaCertificate : (Complex -> Complex) -> Type`
+- `JensenPolynomial : XiCoefficientSequence -> Nat -> Nat -> Polynomial Complex`
+- `JensenHyperbolicityToLaguerrePolyaXi : Prop`
 
 Current bridge theorem:
 
@@ -50,3 +52,15 @@ def LaguerrePolyaZerosRealTheorem : Prop :=
 ```
 
 `LaguerrePolyaCertificate` packages membership in this class with that named theorem. It is not a direct wrapper around `AllZerosReal`.
+
+The Jensen branch is now represented as a separate route:
+
+```lean
+def JensenHyperbolicityToLaguerrePolyaXi : Prop :=
+  forall gamma : XiCoefficientSequence,
+    IsXiCoefficientSequence gamma ->
+      AllJensenPolynomialsHyperbolic gamma ->
+        Nonempty (LaguerrePolyaCertificate Xi)
+```
+
+This is a named research theorem boundary. It does not use the total-positivity route, and it does not claim a proof of RH.
