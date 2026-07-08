@@ -28,7 +28,7 @@ scripts/
 
 `RHLean/RHBridge.lean` owns the theorem turning real zeros of `Xi` into Mathlib's `RiemannHypothesis`.
 
-`RHLean/LaguerrePolya/Certificate.lean` owns the temporary certificate interface. This file should stay thin until a real Laguerre-Polya class definition is added.
+`RHLean/LaguerrePolya/Certificate.lean` owns the Laguerre-Polya class interface and the named theorem boundary from class membership to real zeros.
 
 ## Later Modules
 
