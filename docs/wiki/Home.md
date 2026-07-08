@@ -15,7 +15,14 @@ Useful pages:
 - [Codestyle And Linting](Codestyle-and-Linting)
 - [Main Loop](Main-Loop)
 
-Repository source:
+Repository docs:
+
+- [README](https://github.com/alexlopashev/rh-lol/blob/main/README.md)
+- [Roadmap](https://github.com/alexlopashev/rh-lol/blob/main/docs/ROADMAP.md)
+- [Codebase Structure](https://github.com/alexlopashev/rh-lol/blob/main/docs/STRUCTURE.md)
+- [Codestyle](https://github.com/alexlopashev/rh-lol/blob/main/docs/CODESTYLE.md)
+
+Core Lean source:
 
 - `RHLean/ZetaXi.lean`
 - `RHLean/CriticalLine.lean`

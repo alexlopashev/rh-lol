@@ -2,6 +2,7 @@
 set -euo pipefail
 
 repo_url="${1:-https://github.com/alexlopashev/rh-lol.wiki.git}"
+commit_message="${2:-Sync RHLean wiki}"
 workdir="${TMPDIR:-/tmp}/rh-lol-wiki"
 
 rm -rf "$workdir"
@@ -14,5 +15,5 @@ if git -C "$workdir" diff --cached --quiet; then
   exit 0
 fi
 
-git -C "$workdir" commit -m "Seed RHLean wiki"
+git -C "$workdir" commit -m "$commit_message"
 git -C "$workdir" push origin HEAD:master

@@ -20,3 +20,7 @@ Lean style:
 - Put hard analysis behind named hypotheses or theorems.
 - Prefer small lemmas to large proof blocks.
 - Shrink imports before finishing a change.
+
+Repository reference:
+
+- [docs/CODESTYLE.md](https://github.com/alexlopashev/rh-lol/blob/main/docs/CODESTYLE.md)

@@ -24,3 +24,9 @@ Validation:
 - `scripts/lint_text`
 - `scripts/ci_local`
 - GitHub Actions CI
+
+Issue links:
+
+- [Open ready issues](https://github.com/alexlopashev/rh-lol/issues?q=is%3Aissue%20is%3Aopen%20label%3Astatus%3Aready)
+- [Open PRs](https://github.com/alexlopashev/rh-lol/pulls)
+- [Repository roadmap](https://github.com/alexlopashev/rh-lol/blob/main/docs/ROADMAP.md)
