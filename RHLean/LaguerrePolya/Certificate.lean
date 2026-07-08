@@ -28,9 +28,9 @@ structure LaguerrePolyaCertificate (F : Complex → Complex) : Prop where
 
 /-- A Laguerre-Polya certificate for `Xi` gives RH once zeta zeros transfer to `Xi` zeros. -/
 theorem RH_from_LaguerrePolya_Xi
-    (htransfer : ZetaZerosTransferToXi)
+    (hcompleted : CompletedZetaZerosTransferToXi)
     (hLP : LaguerrePolyaCertificate Xi) :
     RiemannHypothesis :=
-  RH_of_Xi_real_zeros htransfer hLP.zeros_real
+  RH_of_Xi_real_zeros hcompleted hLP.zeros_real
 
 end RHLean
