@@ -5,7 +5,6 @@ Authors: Sasha Lopashev
 -/
 import RHLean.ZetaXi
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
 
 /-!
 # Critical-line predicates and coordinate algebra
@@ -40,7 +39,6 @@ def AllZerosReal (F : Complex → Complex) : Prop :=
 lemma criticalTransform_im (s : Complex) :
     (-Complex.I * (s - (1 / 2 : Complex))).im = (1 : Real) / 2 - s.re := by
   simp [Complex.mul_im, Complex.sub_re, Complex.sub_im]
-  ring
 
 /-- If the `Xi` coordinate of `s` is real, then `s` lies on the critical line. -/
 lemma onCriticalLine_of_aux_real {s : Complex}

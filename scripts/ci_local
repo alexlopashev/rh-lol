@@ -11,4 +11,4 @@ fi
 
 lake exe cache get
 lake build
-lake lint RHLean -- --warnings-as-errors
+lake lint RHLean

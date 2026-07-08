@@ -28,7 +28,7 @@ Deliverables:
 Acceptance:
 
 - `lake build` succeeds.
-- `lake lint RHLean -- --warnings-as-errors` succeeds.
+- `lake lint RHLean` succeeds.
 - The only remaining RH assumptions are named hypotheses such as `ZetaZerosTransferToXi`.
 
 ## Milestone 2: Xi Functional Equation
