@@ -1,5 +1,3 @@
-# Main Loop
-
 Project profile:
 
 ```text

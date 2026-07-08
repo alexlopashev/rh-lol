@@ -1,5 +1,3 @@
-# Formalization Spine
-
 The core dependency spine is:
 
 ```text

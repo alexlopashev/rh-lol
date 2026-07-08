@@ -1,5 +1,3 @@
-# rh-lol Wiki
-
 `rh-lol` is a Lean 4 and Mathlib project for formalizing a dependency graph around a possible Riemann hypothesis strategy.
 
 The project goal is not to announce a proof. The goal is to make each bridge precise:

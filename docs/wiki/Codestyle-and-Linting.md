@@ -1,5 +1,3 @@
-# Codestyle And Linting
-
 Hard rules:
 
 - No `sorry`.

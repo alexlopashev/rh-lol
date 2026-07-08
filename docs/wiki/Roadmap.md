@@ -1,5 +1,3 @@
-# Roadmap
-
 ## Milestone 0: Repository Operating System
 
 Lean/Lake project, Mathlib dependency, CI, codestyle, main-loop profile, labels, issues, and wiki seed.
