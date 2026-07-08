@@ -6,18 +6,33 @@ while IFS= read -r file; do
   lean_files+=("$file")
 done < <(find RHLean -name '*.lean' -print | sort)
 
-if rg -n '\b(sorry|admit|axiom|unsafe)\b' "${lean_files[@]}"; then
+if command -v rg >/dev/null 2>&1; then
+  placeholder_matches="$(rg -n '\b(sorry|admit|axiom|unsafe)\b' "${lean_files[@]}" || true)"
+else
+  placeholder_matches="$(grep -nE '\b(sorry|admit|axiom|unsafe)\b' "${lean_files[@]}" || true)"
+fi
+
+if [[ -n "$placeholder_matches" ]]; then
+  printf '%s\n' "$placeholder_matches"
   echo "Lean sources must not contain sorry, admit, axiom, or unsafe." >&2
   exit 1
 fi
 
-if rg -n '[[:blank:]]$' . --glob '!LICENSE' --glob '!.git/**'; then
+if command -v rg >/dev/null 2>&1; then
+  whitespace_matches="$(rg -n '[[:blank:]]$' . --glob '!LICENSE' --glob '!.git/**' || true)"
+else
+  whitespace_matches="$(find . -type f -not -path './.git/*' -not -name LICENSE -print0 |
+    xargs -0 grep -nE '[[:blank:]]$' || true)"
+fi
+
+if [[ -n "$whitespace_matches" ]]; then
+  printf '%s\n' "$whitespace_matches"
   echo "Trailing whitespace is not allowed." >&2
   exit 1
 fi
 
 for file in "${lean_files[@]}"; do
-  if ! head -n 6 "$file" | rg -q 'Copyright \(c\) 2026 Sasha Lopashev'; then
+  if ! head -n 6 "$file" | grep -q 'Copyright (c) 2026 Sasha Lopashev'; then
     echo "$file is missing the project copyright header." >&2
     exit 1
   fi
