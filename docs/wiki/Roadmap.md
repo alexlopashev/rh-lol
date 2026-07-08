@@ -45,7 +45,7 @@ Tracking issue: [#6](https://github.com/alexlopashev/rh-lol/issues/6).
 
 Define PF-infinity sequences, Toeplitz minors, and total positivity bridges.
 
-Tracking issue: [#7](https://github.com/alexlopashev/rh-lol/issues/7).
+Status: started in [#7](https://github.com/alexlopashev/rh-lol/issues/7) with a minimal `RHLean.TotalPositivity.PFSequence` module and the named bridge `TotalPositivityToLaguerrePolyaXi`.
 
 Repository references:
 

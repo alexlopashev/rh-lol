@@ -19,6 +19,9 @@ Current core objects:
 - `LaguerrePolyaCertificate : (Complex -> Complex) -> Type`
 - `JensenPolynomial : XiCoefficientSequence -> Nat -> Nat -> Polynomial Complex`
 - `JensenHyperbolicityToLaguerrePolyaXi : Prop`
+- `PFInfinitySequence : XiCoefficientSequence -> Prop`
+- `toeplitzMinor : XiCoefficientSequence -> (Fin k -> Nat) -> (Fin k -> Nat) -> Complex`
+- `TotalPositivityToLaguerrePolyaXi : Prop`
 
 Current bridge theorem:
 
@@ -64,3 +67,15 @@ def JensenHyperbolicityToLaguerrePolyaXi : Prop :=
 ```
 
 This is a named research theorem boundary. It does not use the total-positivity route, and it does not claim a proof of RH.
+
+The total-positivity branch is represented as another separate route over the same xi coefficient object:
+
+```lean
+def TotalPositivityToLaguerrePolyaXi : Prop :=
+  forall gamma : XiCoefficientSequence,
+    IsXiCoefficientSequence gamma ->
+      PFInfinitySequence gamma ->
+        Nonempty (LaguerrePolyaCertificate Xi)
+```
+
+This is also a named research theorem boundary. The PF-infinity interface records Toeplitz minor determinants explicitly and does not duplicate Jensen polynomial definitions.

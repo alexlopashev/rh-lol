@@ -7,6 +7,7 @@ import RHLean.CriticalLine
 import RHLean.Jensen.Polynomial
 import RHLean.LaguerrePolya.Certificate
 import RHLean.RHBridge
+import RHLean.TotalPositivity.PFSequence
 import RHLean.ZetaXi
 
 /-!

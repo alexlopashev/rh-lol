@@ -11,6 +11,8 @@ RHLean/
     Polynomial.lean
   LaguerrePolya/
     Certificate.lean
+  TotalPositivity/
+    PFSequence.lean
 docs/
   CODESTYLE.md
   ROADMAP.md
@@ -34,6 +36,8 @@ scripts/
 
 `RHLean/LaguerrePolya/Certificate.lean` owns the Laguerre-Polya class interface and the named theorem boundary from class membership to real zeros.
 
+`RHLean/TotalPositivity/PFSequence.lean` owns the minimal total-positivity route: PF-infinity coefficient sequences, Toeplitz minor determinants, and the named bridge to a Laguerre-Polya certificate for `Xi`.
+
 ## Later Modules
 
 Add these only when the relevant milestone starts:
@@ -44,7 +48,6 @@ RHLean/LaguerrePolya/
   RealZeros.lean
 
 RHLean/TotalPositivity/
-  PFSequence.lean
   ToeplitzMinors.lean
   KernelTotalPositivity.lean
 ```
