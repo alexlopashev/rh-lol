@@ -32,7 +32,7 @@ theorem RH_of_Xi_real_zeros
 The Laguerre-Polya interface is an analytic closure statement:
 
 ```lean
-structure LaguerrePolyaClass (F : Complex -> Complex) : Prop where
+structure LaguerrePolyaClass (F : Complex -> Complex) where
   entire : AnalyticOnNhd Complex F Set.univ
   real_on_real : forall x : Real, (F (x : Complex)).im = 0
   approximants : Nat -> Polynomial Complex
