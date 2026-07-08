@@ -12,8 +12,20 @@ Current core objects:
 - `xi : Complex -> Complex`
 - `Xi : Complex -> Complex`
 - `AllZerosReal : (Complex -> Complex) -> Prop`
-- `ZetaZerosTransferToXi : Prop`
+- `CompletedZetaZerosTransferToXi : Prop`
+- `ZetaZerosTransferToXi : CompletedZetaZerosTransferToXi -> ...`
 - `LaguerrePolyaCertificate : (Complex -> Complex) -> Prop`
+
+Current bridge theorem:
+
+```lean
+theorem RH_of_Xi_real_zeros
+    (hcompleted : CompletedZetaZerosTransferToXi)
+    (hXi : AllZerosReal Xi) :
+    RiemannHypothesis
+```
+
+`CompletedZetaZerosTransferToXi` is the remaining named analytic transfer from completed zeta zeros to `Xi` zeros. It is a visible scaffold hypothesis, not a proof of RH.
 
 The current certificate is intentionally thin:
 
