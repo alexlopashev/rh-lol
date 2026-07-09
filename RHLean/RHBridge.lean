@@ -34,6 +34,13 @@ def CompletedZetaZerosTransferToXi : Prop :=
           completedRiemannZeta s = 0 →
             Xi (-Complex.I * (s - (1 / 2 : Complex))) = 0
 
+/-- Completed-zeta zeros away from the exposed exceptional factors transfer to `Xi` zeros. -/
+theorem completedZetaZerosTransferToXi : CompletedZetaZerosTransferToXi := by
+  intro s hs0 hs1 _hGamma hzero
+  calc
+    Xi (-Complex.I * (s - (1 / 2 : Complex))) = xi s := Xi_neg_I_mul_sub_half s
+    _ = 0 := xi_eq_zero_of_completedRiemannZeta_eq_zero hs0 hs1 hzero
+
 /-- A zeta zero cannot occur at `s = 0`, since Mathlib proves `ζ 0 = -1 / 2`. -/
 lemma zeta_zero_ne_zero {s : Complex} (hz : riemannZeta s = 0) : s ≠ 0 := by
   intro hs
