@@ -46,6 +46,19 @@ Define PF-infinity sequences, Toeplitz minors, and total positivity bridges.
 
 Status: started in [#7](https://github.com/alexlopashev/rh-lol/issues/7) with a minimal `RHLean.TotalPositivity.PFSequence` module and the named bridge `TotalPositivityToLaguerrePolyaXi`.
 
+## Milestone 7: Completed-Zeta Transfer Cleanup
+
+Goal: discharge `CompletedZetaZerosTransferToXi` and remove it from public RH bridge signatures, leaving `RH_of_Xi_real_zeros` with the single visible hypothesis `AllZerosReal Xi`.
+
+Issue sequence:
+
+- [#17](https://github.com/alexlopashev/rh-lol/issues/17): prove the inverse `Xi` critical-transform identity.
+- [#18](https://github.com/alexlopashev/rh-lol/issues/18): prove the local `xi` normalization by Mathlib's completed zeta away from poles.
+- [#19](https://github.com/alexlopashev/rh-lol/issues/19): prove `CompletedZetaZerosTransferToXi`.
+- [#20](https://github.com/alexlopashev/rh-lol/issues/20): remove the completed-transfer hypothesis from public RH bridge APIs.
+
+Status: completed through [#17](https://github.com/alexlopashev/rh-lol/issues/17), [#18](https://github.com/alexlopashev/rh-lol/issues/18), [#19](https://github.com/alexlopashev/rh-lol/issues/19), and [#20](https://github.com/alexlopashev/rh-lol/issues/20). This milestone removes an algebraic transfer hypothesis; it does not prove RH or discharge the Laguerre-Polya, Jensen-polynomial, or total-positivity research boundaries.
+
 Repository references:
 
 - [Full roadmap](https://github.com/alexlopashev/rh-lol/blob/main/docs/ROADMAP.md)

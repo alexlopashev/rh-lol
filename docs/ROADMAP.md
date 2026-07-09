@@ -99,3 +99,33 @@ Acceptance:
 - It does not duplicate Jensen definitions unless the math demands it.
 
 Status: started in [#7](https://github.com/alexlopashev/rh-lol/issues/7) with a minimal `RHLean.TotalPositivity.PFSequence` module and the named bridge `TotalPositivityToLaguerrePolyaXi`.
+
+## Milestone 7: Completed-Zeta Transfer Cleanup
+
+Goal:
+
+- Discharge `CompletedZetaZerosTransferToXi` from Mathlib completed-zeta
+  definitions and the local `Xi` normalization.
+- Remove the completed-zeta transfer from public RH bridge signatures, so
+  callers of `RH_of_Xi_real_zeros` provide only `AllZerosReal Xi`.
+
+Implementation sequence:
+
+- [#17](https://github.com/alexlopashev/rh-lol/issues/17): prove the inverse
+  `Xi` critical-transform identity used to move between `s` and the real-line
+  parameter.
+- [#18](https://github.com/alexlopashev/rh-lol/issues/18): prove the local
+  `xi` normalization by Mathlib's completed zeta away from the pole exclusions.
+- [#19](https://github.com/alexlopashev/rh-lol/issues/19): prove
+  `CompletedZetaZerosTransferToXi` from those algebraic and normalization
+  facts.
+- [#20](https://github.com/alexlopashev/rh-lol/issues/20): remove the
+  completed-transfer hypothesis from public RH bridge APIs.
+
+Boundary:
+
+- This milestone removes an algebraic transfer hypothesis from the RH bridge.
+- It does not prove RH, prove `AllZerosReal Xi`, or discharge the remaining
+  Laguerre-Polya, Jensen-polynomial, or total-positivity research boundaries.
+
+Status: completed through [#17](https://github.com/alexlopashev/rh-lol/issues/17), [#18](https://github.com/alexlopashev/rh-lol/issues/18), [#19](https://github.com/alexlopashev/rh-lol/issues/19), and [#20](https://github.com/alexlopashev/rh-lol/issues/20).
