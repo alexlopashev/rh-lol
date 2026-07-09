@@ -44,7 +44,7 @@ theorem Xi_neg_I_mul_sub_half (s : Complex) :
   calc
     (1 / 2 : Complex) + Complex.I * (-Complex.I * (s - (1 / 2 : Complex)))
         = (1 / 2 : Complex) + (s - (1 / 2 : Complex)) := by
-      rw [mul_assoc]
+      rw [← mul_assoc]
       simp [Complex.I_mul_I]
     _ = s := by
       ring
