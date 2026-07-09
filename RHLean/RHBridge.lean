@@ -9,9 +9,9 @@ import Mathlib.Tactic.NormNum
 /-!
 # Bridge from real zeros of Xi to Mathlib's Riemann hypothesis
 
-The zeta-to-Xi transfer is split into elementary exclusions and a remaining
-named completed-zeta transfer statement.  Once that transfer is available,
-real-rootedness of `Xi` implies Mathlib's `RiemannHypothesis`.
+The zeta-to-Xi transfer is split into elementary exclusions and the discharged
+named completed-zeta transfer theorem.  Real-rootedness of `Xi` then implies
+Mathlib's `RiemannHypothesis`.
 -/
 
 noncomputable section
@@ -75,9 +75,8 @@ lemma completedRiemannZeta_eq_zero_of_zeta_eq_zero {s : Complex}
     simpa [hz] using hdef.symm
   exact (div_eq_zero_iff.mp hquot).resolve_right hGamma
 
-/-- Nontrivial zeta zeros transfer to `Xi` zeros once the completed-zeta transfer is known. -/
-theorem ZetaZerosTransferToXi
-    (hcompleted : CompletedZetaZerosTransferToXi) :
+/-- Nontrivial zeta zeros transfer to `Xi` zeros. -/
+theorem ZetaZerosTransferToXi :
     ∀ s : Complex,
       NontrivialZetaZero s →
       Xi (-Complex.I * (s - (1 / 2 : Complex))) = 0 := by
@@ -85,7 +84,7 @@ theorem ZetaZerosTransferToXi
   rcases hs with ⟨hz, hnottriv, hs1⟩
   have hs0 : s ≠ 0 := zeta_zero_ne_zero hz
   have hGamma : Gammaℝ s ≠ 0 := GammaR_ne_zero_of_ne_zero_of_not_trivial hs0 hnottriv
-  exact hcompleted s hs0 hs1 hGamma
+  exact completedZetaZerosTransferToXi s hs0 hs1 hGamma
     (completedRiemannZeta_eq_zero_of_zeta_eq_zero hz hs0 hGamma)
 
 /-- Mathlib's RH statement follows from locating every nontrivial zeta zero on the critical line. -/
@@ -97,12 +96,11 @@ theorem RH_of_nontrivial_zero_location
 
 /-- If every `Xi` zero is real, then RH follows from the zeta-to-Xi transfer theorem. -/
 theorem RH_of_Xi_real_zeros
-    (hcompleted : CompletedZetaZerosTransferToXi)
     (hXi : AllZerosReal Xi) :
     RiemannHypothesis := by
   apply RH_of_nontrivial_zero_location
   intro s hs
   apply onCriticalLine_of_aux_real
-  exact hXi _ (ZetaZerosTransferToXi hcompleted s hs)
+  exact hXi _ (ZetaZerosTransferToXi s hs)
 
 end RHLean

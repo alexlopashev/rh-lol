@@ -60,15 +60,14 @@ def laguerrePolyaCertificateXiOfJensenHyperbolicity
   Classical.choice
     (exists_laguerrePolyaCertificate_Xi_of_jensenHyperbolicity hbridge hγ hJensen)
 
-/-- The Jensen route gives RH once its named bridge and the zeta-to-`Xi` transfer are known. -/
+/-- The Jensen route gives RH once its named bridge supplies a Laguerre-Polya certificate. -/
 theorem RH_from_JensenHyperbolicity_Xi
-    (hcompleted : CompletedZetaZerosTransferToXi)
     (hbridge : JensenHyperbolicityToLaguerrePolyaXi)
     {γ : XiCoefficientSequence}
     (hγ : IsXiCoefficientSequence γ)
     (hJensen : AllJensenPolynomialsHyperbolic γ) :
     RiemannHypothesis :=
-  RH_from_LaguerrePolya_Xi hcompleted
+  RH_from_LaguerrePolya_Xi
     (laguerrePolyaCertificateXiOfJensenHyperbolicity hbridge hγ hJensen)
 
 end RHLean

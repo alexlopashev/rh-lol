@@ -74,12 +74,11 @@ structure LaguerrePolyaCertificate (F : Complex → Complex) where
   /-- The named theorem turning Laguerre-Polya membership into real zeros. -/
   zeros_real_theorem : LaguerrePolyaZerosRealTheorem
 
-/-- A Laguerre-Polya certificate for `Xi` gives RH once zeta zeros transfer to `Xi` zeros. -/
+/-- A Laguerre-Polya certificate for `Xi` gives RH through the discharged zeta-to-`Xi` transfer. -/
 theorem RH_from_LaguerrePolya_Xi
-    (hcompleted : CompletedZetaZerosTransferToXi)
     (hLP : LaguerrePolyaCertificate Xi) :
     RiemannHypothesis :=
-  RH_of_Xi_real_zeros hcompleted
+  RH_of_Xi_real_zeros
     (allZerosReal_of_laguerrePolya hLP.zeros_real_theorem hLP.membership)
 
 end RHLean

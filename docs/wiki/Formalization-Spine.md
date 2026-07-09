@@ -13,7 +13,8 @@ Current core objects:
 - `Xi : Complex -> Complex`
 - `AllZerosReal : (Complex -> Complex) -> Prop`
 - `CompletedZetaZerosTransferToXi : Prop`
-- `ZetaZerosTransferToXi : CompletedZetaZerosTransferToXi -> ...`
+- `completedZetaZerosTransferToXi : CompletedZetaZerosTransferToXi`
+- `ZetaZerosTransferToXi : ...`
 - `LaguerrePolyaClass : (Complex -> Complex) -> Type`
 - `LaguerrePolyaZerosRealTheorem : Prop`
 - `LaguerrePolyaCertificate : (Complex -> Complex) -> Type`
@@ -29,12 +30,11 @@ Current bridge theorem:
 
 ```lean
 theorem RH_of_Xi_real_zeros
-    (hcompleted : CompletedZetaZerosTransferToXi)
     (hXi : AllZerosReal Xi) :
     RiemannHypothesis
 ```
 
-`CompletedZetaZerosTransferToXi` is the remaining named analytic transfer from completed zeta zeros to `Xi` zeros. It is a visible scaffold hypothesis, not a proof of RH.
+`CompletedZetaZerosTransferToXi` remains as a named transfer proposition, and `completedZetaZerosTransferToXi` proves it from the current completed zeta definitions. It is no longer an external hypothesis of the public RH bridge. This is not a proof of RH: the remaining hard route to `AllZerosReal Xi` stays behind named Laguerre-Polya, Jensen, and total-positivity theorem boundaries.
 
 The Laguerre-Polya interface is an analytic closure statement:
 

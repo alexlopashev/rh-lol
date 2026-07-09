@@ -29,7 +29,7 @@ Acceptance:
 
 - `lake build` succeeds.
 - `lake lint RHLean` succeeds.
-- The only remaining RH assumptions are named hypotheses such as `ZetaZerosTransferToXi`.
+- The bridge targets Mathlib's `RiemannHypothesis`; later milestones keep hard steps named and discharge the zeta-to-`Xi` transfer.
 
 ## Milestone 2: Xi Functional Equation
 
@@ -54,6 +54,8 @@ Acceptance:
 
 - Nontrivial zeta zeros transfer to zeros of `Xi (-I * (s - 1 / 2))`.
 - The bridge theorem no longer assumes the transfer as a project-level hypothesis.
+
+Status: completed in [#20](https://github.com/alexlopashev/rh-lol/issues/20) after the completed-zeta transfer was discharged in [#19](https://github.com/alexlopashev/rh-lol/issues/19). `RH_of_Xi_real_zeros` now depends only on `AllZerosReal Xi`; the remaining unproved RH route work stays behind named Laguerre-Polya, Jensen, and total-positivity theorem boundaries.
 
 ## Milestone 4: Real Laguerre-Polya Certificate
 

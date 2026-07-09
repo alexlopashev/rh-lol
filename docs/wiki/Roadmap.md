@@ -10,12 +10,11 @@ Formal target:
 
 ```lean
 theorem RH_of_Xi_real_zeros
-    (hcompleted : CompletedZetaZerosTransferToXi)
     (hXi : AllZerosReal Xi) :
     RiemannHypothesis
 ```
 
-Status: done in [#2](https://github.com/alexlopashev/rh-lol/issues/2). The theorem targets Mathlib's `RiemannHypothesis`.
+Status: updated through [#20](https://github.com/alexlopashev/rh-lol/issues/20). The theorem targets Mathlib's `RiemannHypothesis` and no longer takes the completed-zeta transfer as an external argument.
 
 ## Milestone 2: Xi Functional Equation
 
@@ -25,9 +24,9 @@ Status: done in [#3](https://github.com/alexlopashev/rh-lol/issues/3).
 
 ## Milestone 3: Zeta-Zero-To-Xi Transfer
 
-Keep the transfer explicit. The current scaffold proves `ZetaZerosTransferToXi` from the remaining named hypothesis `CompletedZetaZerosTransferToXi`.
+Keep the transfer explicit and checked. The scaffold now proves `completedZetaZerosTransferToXi`, then uses it inside `ZetaZerosTransferToXi` so public RH bridge callers do not provide a completed-zeta transfer hypothesis.
 
-Status: refined in [#4](https://github.com/alexlopashev/rh-lol/issues/4). The completed-zeta-to-`Xi` analytic bridge is still intentionally named, not hidden.
+Status: completed through [#19](https://github.com/alexlopashev/rh-lol/issues/19) and [#20](https://github.com/alexlopashev/rh-lol/issues/20). This discharges the completed-zeta-to-`Xi` transfer; it does not claim RH, because the route to `AllZerosReal Xi` is still represented by named Laguerre-Polya, Jensen, and total-positivity theorem boundaries.
 
 ## Milestone 4: Real Laguerre-Polya Certificate
 
