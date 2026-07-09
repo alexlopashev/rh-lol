@@ -22,6 +22,7 @@ Current core objects:
 - `IsXiCoefficientSequence : XiCoefficientSequence -> Prop`
 - `JensenPolynomial : XiCoefficientSequence -> Nat -> Nat -> Polynomial Complex`
 - `JensenHyperbolicityToLaguerrePolyaXi : Prop`
+- `IsIncreasingNatSelection : (Fin k -> Nat) -> Prop`
 - `PFInfinitySequence : XiCoefficientSequence -> Prop`
 - `toeplitzMinor : XiCoefficientSequence -> (Fin k -> Nat) -> (Fin k -> Nat) -> Complex`
 - `TotalPositivityToLaguerrePolyaXi : Prop`
@@ -84,4 +85,4 @@ def TotalPositivityToLaguerrePolyaXi : Prop :=
         Nonempty (LaguerrePolyaCertificate Xi)
 ```
 
-This is also a named research theorem boundary. The PF-infinity interface records Toeplitz minor determinants explicitly and does not duplicate Jensen polynomial definitions.
+This is also a named research theorem boundary. The PF-infinity interface records Toeplitz minor determinants explicitly for strictly increasing row and column index selections, and does not duplicate Jensen polynomial definitions.
