@@ -37,7 +37,7 @@ scripts/
 
 `RHLean/Jensen/Polynomial.lean` owns the minimal Jensen polynomial route: Jensen polynomials, real hyperbolicity, and the named bridge to a Laguerre-Polya certificate for `Xi`.
 
-`RHLean/LaguerrePolya/Certificate.lean` owns the Laguerre-Polya class interface and the named theorem boundary from class membership to real zeros.
+`RHLean/LaguerrePolya/Certificate.lean` owns the Laguerre-Polya class interface and the named theorem boundary from class membership, plus a nonzero-target hypothesis, to real zeros.
 
 `RHLean/TotalPositivity/PFSequence.lean` owns the minimal total-positivity route: PF-infinity conditions, Toeplitz minor determinants, and the named bridge to a Laguerre-Polya certificate for `Xi`.
 

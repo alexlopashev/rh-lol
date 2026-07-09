@@ -62,13 +62,14 @@ Status: completed in [#20](https://github.com/alexlopashev/rh-lol/issues/20) aft
 Deliverables:
 
 - Define the Laguerre-Polya class or a conservative Mathlib-compatible interface for it.
-- Prove membership implies all zeros are real.
+- Prove membership plus an explicit nonzero-target hypothesis implies all zeros are real.
 - Replace the temporary `LaguerrePolyaCertificate.zeros_real` field.
 
 Acceptance:
 
 - The certificate is no longer just a wrapper around `AllZerosReal`.
 - Any unformalized classical theorem is a single named theorem with a precise statement.
+- The zero-function exclusion is visible at the certificate boundary, not hidden in prose.
 
 ## Milestone 5: Jensen Polynomial Route
 
