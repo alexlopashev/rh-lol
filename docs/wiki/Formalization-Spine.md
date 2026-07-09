@@ -52,11 +52,15 @@ structure LaguerrePolyaClass (F : Complex -> Complex) where
 The hard closure theorem is still explicit:
 
 ```lean
+def NonzeroFunction (F : Complex -> Complex) : Prop :=
+  exists z : Complex, F z ≠ 0
+
 def LaguerrePolyaZerosRealTheorem : Prop :=
-  forall {F : Complex -> Complex}, LaguerrePolyaClass F -> AllZerosReal F
+  forall {F : Complex -> Complex},
+    LaguerrePolyaClass F -> NonzeroFunction F -> AllZerosReal F
 ```
 
-`LaguerrePolyaCertificate` packages membership in this class with that named theorem. It is not a direct wrapper around `AllZerosReal`.
+`LaguerrePolyaCertificate` packages membership in this class, an explicit nonzero-target witness, and that named theorem. It is not a direct wrapper around `AllZerosReal`.
 
 The Jensen branch is represented as a separate route over the shared `XiCoefficientSequence` interface:
 
