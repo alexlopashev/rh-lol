@@ -4,6 +4,7 @@ Released under MIT license as described in the file LICENSE.
 Authors: Sasha Lopashev
 -/
 import Mathlib.NumberTheory.LSeries.RiemannZeta
+import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Ring
 
 /-!
@@ -28,6 +29,32 @@ normalization `1 / 2 * (s * (s - 1) * completedRiemannZeta₀ s + 1)`.
 -/
 def xi (s : Complex) : Complex :=
   (1 / 2 : Complex) * (s * (s - 1) * completedRiemannZeta₀ s + 1)
+
+/-- Multiplying by `s * (s - 1)` cancels the two pole-correction terms in
+Mathlib's `completedRiemannZeta_eq` formula. -/
+lemma completedRiemannZeta_pole_correction_factor
+    {s : Complex} (hs0 : s ≠ 0) (hs1 : s ≠ 1) :
+    s * (s - 1) * (completedRiemannZeta₀ s - 1 / s - 1 / (1 - s))
+      = s * (s - 1) * completedRiemannZeta₀ s + 1 := by
+  have h1s : (1 : Complex) - s ≠ 0 := sub_ne_zero.mpr hs1.symm
+  field_simp [hs0, h1s]
+  ring
+
+/-- Away from `s = 0, 1`, this repo's `xi` is the standard polynomial
+normalization of Mathlib's completed Riemann zeta function. -/
+theorem xi_eq_half_mul_completedRiemannZeta
+    {s : Complex} (hs0 : s ≠ 0) (hs1 : s ≠ 1) :
+    xi s = (1 / 2 : Complex) * (s * (s - 1) * completedRiemannZeta s) := by
+  rw [xi, completedRiemannZeta_eq,
+    completedRiemannZeta_pole_correction_factor hs0 hs1]
+
+/-- A completed-zeta zero away from `s = 0, 1` is a zero of `xi`. -/
+theorem xi_eq_zero_of_completedRiemannZeta_eq_zero
+    {s : Complex} (hs0 : s ≠ 0) (hs1 : s ≠ 1)
+    (hzero : completedRiemannZeta s = 0) :
+    xi s = 0 := by
+  rw [xi_eq_half_mul_completedRiemannZeta hs0 hs1, hzero]
+  ring
 
 /-- The real-line model of xi on the critical line.
 
