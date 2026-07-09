@@ -36,6 +36,19 @@ Zeros of `Xi` with real input correspond to zeros of `xi` on `re s = 1 / 2`.
 def Xi (z : Complex) : Complex :=
   xi ((1 / 2 : Complex) + Complex.I * z)
 
+/-- The inverse critical-line transform recovers the original xi input. -/
+theorem Xi_neg_I_mul_sub_half (s : Complex) :
+    Xi (-Complex.I * (s - (1 / 2 : Complex))) = xi s := by
+  rw [Xi]
+  congr 1
+  calc
+    (1 / 2 : Complex) + Complex.I * (-Complex.I * (s - (1 / 2 : Complex)))
+        = (1 / 2 : Complex) + (s - (1 / 2 : Complex)) := by
+      rw [mul_assoc]
+      simp [Complex.I_mul_I]
+    _ = s := by
+      ring
+
 /-- The polynomial factor in `xi` is invariant under `s ↦ 1 - s`. -/
 lemma xi_prefactor_one_sub (s : Complex) :
     (1 - s) * ((1 - s) - 1) = s * (s - 1) := by
