@@ -17,6 +17,8 @@ Current core objects:
 - `LaguerrePolyaClass : (Complex -> Complex) -> Type`
 - `LaguerrePolyaZerosRealTheorem : Prop`
 - `LaguerrePolyaCertificate : (Complex -> Complex) -> Type`
+- `XiCoefficientSequence : Type`
+- `IsXiCoefficientSequence : XiCoefficientSequence -> Prop`
 - `JensenPolynomial : XiCoefficientSequence -> Nat -> Nat -> Polynomial Complex`
 - `JensenHyperbolicityToLaguerrePolyaXi : Prop`
 - `PFInfinitySequence : XiCoefficientSequence -> Prop`
@@ -56,7 +58,7 @@ def LaguerrePolyaZerosRealTheorem : Prop :=
 
 `LaguerrePolyaCertificate` packages membership in this class with that named theorem. It is not a direct wrapper around `AllZerosReal`.
 
-The Jensen branch is now represented as a separate route:
+The Jensen branch is represented as a separate route over the shared `XiCoefficientSequence` interface:
 
 ```lean
 def JensenHyperbolicityToLaguerrePolyaXi : Prop :=

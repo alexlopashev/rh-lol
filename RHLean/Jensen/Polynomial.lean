@@ -4,8 +4,8 @@ Released under MIT license as described in the file LICENSE.
 Authors: Sasha Lopashev
 -/
 import RHLean.LaguerrePolya.Certificate
+import RHLean.XiCoefficients
 import Mathlib.Algebra.Polynomial.BigOperators
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
 
 /-!
 # Jensen polynomial route for Xi coefficients
@@ -20,14 +20,6 @@ noncomputable section
 namespace RHLean
 
 open scoped BigOperators
-
-/-- A candidate coefficient sequence for the power-series expansion of `Xi`. -/
-abbrev XiCoefficientSequence :=
-  Nat → Complex
-
-/-- The sequence `γ` is a power-series coefficient sequence for `Xi` at `0`. -/
-def IsXiCoefficientSequence (γ : XiCoefficientSequence) : Prop :=
-  ∀ z : Complex, HasSum (fun n : Nat => γ n * z ^ n) (Xi z)
 
 /-- The Jensen polynomial `J_{γ,n,d}` attached to a coefficient sequence. -/
 def JensenPolynomial (γ : XiCoefficientSequence) (n d : Nat) : Polynomial Complex :=
