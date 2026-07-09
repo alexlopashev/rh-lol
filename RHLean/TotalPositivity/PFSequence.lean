@@ -79,15 +79,14 @@ def laguerrePolyaCertificateXiOfTotalPositivity
   Classical.choice
     (exists_laguerrePolyaCertificate_Xi_of_totalPositivity hbridge hγ hPF)
 
-/-- The total-positivity route gives RH once its named bridge and zeta transfer are known. -/
+/-- The total-positivity route gives RH once its named bridge supplies a Laguerre-Polya certificate. -/
 theorem RH_from_totalPositivity_Xi
-    (hcompleted : CompletedZetaZerosTransferToXi)
     (hbridge : TotalPositivityToLaguerrePolyaXi)
     {γ : XiCoefficientSequence}
     (hγ : IsXiCoefficientSequence γ)
     (hPF : PFInfinitySequence γ) :
     RiemannHypothesis :=
-  RH_from_LaguerrePolya_Xi hcompleted
+  RH_from_LaguerrePolya_Xi
     (laguerrePolyaCertificateXiOfTotalPositivity hbridge hγ hPF)
 
 end RHLean

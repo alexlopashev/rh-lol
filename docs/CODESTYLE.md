@@ -22,7 +22,7 @@
 
 - Predicate names should read as mathematical facts: `AllZerosReal`, `OnCriticalLine`.
 - Bridge theorem names should expose direction: `RH_of_Xi_real_zeros`.
-- Placeholder theorem or hypothesis names should name the missing bridge exactly: `ZetaZerosTransferToXi`.
+- Placeholder theorem or hypothesis names should name the missing bridge exactly, such as `LaguerrePolyaZerosRealTheorem`.
 
 ## Imports
 
