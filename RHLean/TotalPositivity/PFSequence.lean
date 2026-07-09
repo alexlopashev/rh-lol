@@ -3,7 +3,8 @@ Copyright (c) 2026 Sasha Lopashev. All rights reserved.
 Released under MIT license as described in the file LICENSE.
 Authors: Sasha Lopashev
 -/
-import RHLean.Jensen.Polynomial
+import RHLean.LaguerrePolya.Certificate
+import RHLean.XiCoefficients
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 
 /-!

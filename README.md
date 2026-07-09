@@ -26,6 +26,7 @@ Initial formal spine:
 - `RHLean.ZetaXi`: defines `xi` and `Xi`.
 - `RHLean.CriticalLine`: defines zeta-zero predicates and the critical-line coordinate lemma.
 - `RHLean.RHBridge`: proves `RH_of_Xi_real_zeros` from explicit transfer and real-zero hypotheses.
+- `RHLean.XiCoefficients`: defines the shared `Xi` coefficient sequence interface.
 - `RHLean.Jensen.Polynomial`: defines the minimal Jensen polynomial route and its named bridge to a Laguerre-Polya certificate for `Xi`.
 - `RHLean.LaguerrePolya.Certificate`: defines the Laguerre-Polya class interface and the named theorem needed to turn membership into real zeros.
 - `RHLean.TotalPositivity.PFSequence`: defines the minimal PF-infinity / Toeplitz-minor route and its named bridge to a Laguerre-Polya certificate for `Xi`.
