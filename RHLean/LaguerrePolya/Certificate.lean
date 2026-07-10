@@ -12,8 +12,10 @@ import Mathlib.Topology.UniformSpace.LocallyUniformConvergence
 # Laguerre-Polya class interface
 
 This file records a conservative Mathlib-compatible interface for the
-Laguerre-Polya class.  The hard classical theorem that nonzero membership
-forces real zeros is still isolated as a named statement.
+Laguerre-Polya class.  The hard classical theorem that nonzero locally uniform
+limits of real-rooted polynomials have only real zeros is still isolated as a
+named statement, and the broader membership-to-real-zeros theorem is derived
+from that boundary.
 -/
 
 noncomputable section
@@ -60,6 +62,19 @@ structure LaguerrePolyaClass (F : Complex → Complex) where
 def NonzeroFunction (F : Complex → Complex) : Prop :=
   ∃ z : Complex, F z ≠ 0
 
+/-- The approximation data from the Laguerre-Polya interface that matters for zeros. -/
+def LocallyUniformRealRootedApproximation
+    (F : Complex → Complex) (p : Nat → Polynomial Complex) : Prop :=
+  (∀ n : Nat, RealRootedPolynomial (p n)) ∧
+    TendstoLocallyUniformlyOn
+      (fun (n : Nat) (z : Complex) => (p n).eval z) F Filter.atTop Set.univ
+
+/-- Laguerre-Polya membership supplies the real-rooted locally uniform approximation data. -/
+theorem locallyUniformRealRootedApproximation_of_laguerrePolya
+    {F : Complex → Complex} (hLP : LaguerrePolyaClass F) :
+    LocallyUniformRealRootedApproximation F hLP.approximants :=
+  ⟨hLP.approximants_real_rooted, hLP.locally_uniform_limit⟩
+
 /-- The current `xi` normalization is nonzero at `s = 1`. -/
 theorem xi_one_ne_zero : xi (1 : Complex) ≠ 0 := by
   rw [xi]
@@ -71,13 +86,32 @@ theorem Xi_nonzero : NonzeroFunction Xi := by
   rw [Xi_neg_I_mul_sub_half]
   exact xi_one_ne_zero
 
-/-- The remaining hard Laguerre-Polya theorem needed by the RH spine.
+/-- The hard zero-preservation theorem for locally uniform real-rooted limits.
 
-The nonzero-target hypothesis is explicit because the zero function belongs to
-closure-style Laguerre-Polya interfaces but does not satisfy `AllZerosReal`.
+This is the analytic boundary where Hurwitz-style zero preservation and the
+locally uniform limit argument belong.  The nonzero-target hypothesis is
+explicit because the zero function can be a locally uniform limit of real-rooted
+polynomials but does not satisfy `AllZerosReal`.
 -/
+def LocallyUniformRealRootedLimitZerosRealTheorem : Prop :=
+  ∀ {F : Complex → Complex} {p : Nat → Polynomial Complex},
+    LocallyUniformRealRootedApproximation F p → NonzeroFunction F → AllZerosReal F
+
+/-- The remaining hard Laguerre-Polya theorem needed by the RH spine. -/
 def LaguerrePolyaZerosRealTheorem : Prop :=
   ∀ {F : Complex → Complex}, LaguerrePolyaClass F → NonzeroFunction F → AllZerosReal F
+
+/--
+The broad Laguerre-Polya zero theorem follows from the local-uniform-limit
+zero-preservation boundary plus the approximation fields of `LaguerrePolyaClass`.
+-/
+theorem laguerrePolyaZerosRealTheorem_of_locallyUniformRealRootedLimit
+    (hlimit : LocallyUniformRealRootedLimitZerosRealTheorem) :
+    LaguerrePolyaZerosRealTheorem := by
+  intro F hLP hnonzero
+  exact hlimit
+    (locallyUniformRealRootedApproximation_of_laguerrePolya hLP)
+    hnonzero
 
 /-- The explicit dependency from Laguerre-Polya membership to real zeros. -/
 theorem allZerosReal_of_laguerrePolya

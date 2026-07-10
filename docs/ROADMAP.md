@@ -71,7 +71,8 @@ Acceptance:
 
 - The public RH wrapper derives `AllZerosReal Xi` from membership, the proved
   nonzero-`Xi` fact, and the named zero theorem rather than a packaged certificate.
-- Any unformalized classical theorem is a single named theorem with a precise statement.
+- The unformalized classical zero-preservation step is named separately from
+  the broader Laguerre-Polya membership-to-real-zeros theorem.
 - The general zero-function exclusion remains visible in the named Laguerre-Polya
   theorem, while the `Xi` instance is supplied by `Xi_nonzero`.
 

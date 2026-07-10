@@ -16,6 +16,8 @@ Current core objects:
 - `completedZetaZerosTransferToXi : CompletedZetaZerosTransferToXi`
 - `ZetaZerosTransferToXi : ...`
 - `LaguerrePolyaClass : (Complex -> Complex) -> Type`
+- `LocallyUniformRealRootedApproximation : (Complex -> Complex) -> (Nat -> Polynomial Complex) -> Prop`
+- `LocallyUniformRealRootedLimitZerosRealTheorem : Prop`
 - `LaguerrePolyaZerosRealTheorem : Prop`
 - `XiCoefficientSequence : Type`
 - `IsXiCoefficientSequence : XiCoefficientSequence -> Prop`
@@ -49,15 +51,30 @@ structure LaguerrePolyaClass (F : Complex -> Complex) where
       (fun (n : Nat) (z : Complex) => (approximants n).eval z) F Filter.atTop Set.univ
 ```
 
-The hard closure theorem is still explicit:
+The hard zero-preservation step is split out from the broader class-membership
+wrapper:
 
 ```lean
 def NonzeroFunction (F : Complex -> Complex) : Prop :=
   exists z : Complex, F z ≠ 0
 
+def LocallyUniformRealRootedApproximation
+    (F : Complex -> Complex) (p : Nat -> Polynomial Complex) : Prop :=
+  (forall n : Nat, RealRootedPolynomial (p n)) /\
+    TendstoLocallyUniformlyOn
+      (fun (n : Nat) (z : Complex) => (p n).eval z) F Filter.atTop Set.univ
+
+def LocallyUniformRealRootedLimitZerosRealTheorem : Prop :=
+  forall {F : Complex -> Complex} {p : Nat -> Polynomial Complex},
+    LocallyUniformRealRootedApproximation F p -> NonzeroFunction F -> AllZerosReal F
+
 def LaguerrePolyaZerosRealTheorem : Prop :=
   forall {F : Complex -> Complex},
     LaguerrePolyaClass F -> NonzeroFunction F -> AllZerosReal F
+
+theorem laguerrePolyaZerosRealTheorem_of_locallyUniformRealRootedLimit
+    (hlimit : LocallyUniformRealRootedLimitZerosRealTheorem) :
+    LaguerrePolyaZerosRealTheorem
 
 theorem Xi_nonzero : NonzeroFunction Xi
 ```
