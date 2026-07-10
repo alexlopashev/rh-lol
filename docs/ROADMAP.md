@@ -64,15 +64,16 @@ Deliverables:
 - Define the Laguerre-Polya class or a conservative Mathlib-compatible interface for it.
 - Prove membership plus an explicit nonzero-target hypothesis implies all zeros are real.
 - Keep `LaguerrePolyaZerosRealTheorem`, `LaguerrePolyaClass Xi`, and
-  `NonzeroFunction Xi` visible at the public `RH_from_LaguerrePolya_Xi`
+  the proved `Xi_nonzero` fact visible at the `RH_from_LaguerrePolya_Xi`
   boundary until the real theorem is formalized.
 
 Acceptance:
 
-- The public RH wrapper derives `AllZerosReal Xi` from membership, nonzero-`Xi`,
-  and the named zero theorem rather than a packaged certificate.
+- The public RH wrapper derives `AllZerosReal Xi` from membership, the proved
+  nonzero-`Xi` fact, and the named zero theorem rather than a packaged certificate.
 - Any unformalized classical theorem is a single named theorem with a precise statement.
-- The zero-function exclusion is visible at the wrapper boundary, not hidden in prose.
+- The general zero-function exclusion remains visible in the named Laguerre-Polya
+  theorem, while the `Xi` instance is supplied by `Xi_nonzero`.
 
 ## Milestone 5: Jensen Polynomial Route
 
@@ -92,8 +93,8 @@ Status: started in [#6](https://github.com/alexlopashev/rh-lol/issues/6) with a 
 existential coefficient boundary `ExistsXiCoefficientSequenceWithJensenHyperbolicity`
 and the RH wrapper theorem through that bridge.
 The Jensen bridge supplies only `Nonempty (LaguerrePolyaClass Xi)`; the RH
-wrappers still require the named `LaguerrePolyaZerosRealTheorem` and
-`NonzeroFunction Xi` boundaries explicitly.
+wrappers still require the named `LaguerrePolyaZerosRealTheorem`, while
+nonzero-`Xi` is supplied internally by `Xi_nonzero`.
 
 ## Milestone 6: Total Positivity Route
 
@@ -117,7 +118,7 @@ hyperbolicity edge explicit.
 [#39](https://github.com/alexlopashev/rh-lol/issues/39) routes the public
 PF-infinity RH wrapper through that Jensen edge and the existing
 Jensen-to-Laguerre-Polya membership bridge, with the Laguerre-Polya zero theorem
-and nonzero-`Xi` boundary still explicit.
+still explicit and nonzero-`Xi` supplied internally.
 
 ## Milestone 7: Completed-Zeta Transfer Cleanup
 

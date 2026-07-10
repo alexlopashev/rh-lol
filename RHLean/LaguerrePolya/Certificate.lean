@@ -60,6 +60,17 @@ structure LaguerrePolyaClass (F : Complex → Complex) where
 def NonzeroFunction (F : Complex → Complex) : Prop :=
   ∃ z : Complex, F z ≠ 0
 
+/-- The current `xi` normalization is nonzero at `s = 1`. -/
+theorem xi_one_ne_zero : xi (1 : Complex) ≠ 0 := by
+  rw [xi]
+  norm_num
+
+/-- The critical-line transform `Xi` is not identically zero. -/
+theorem Xi_nonzero : NonzeroFunction Xi := by
+  refine ⟨-Complex.I * ((1 : Complex) - (1 / 2 : Complex)), ?_⟩
+  rw [Xi_neg_I_mul_sub_half]
+  exact xi_one_ne_zero
+
 /-- The remaining hard Laguerre-Polya theorem needed by the RH spine.
 
 The nonzero-target hypothesis is explicit because the zero function belongs to
@@ -76,15 +87,14 @@ theorem allZerosReal_of_laguerrePolya
   hzeros hLP hnonzero
 
 /--
-Laguerre-Polya membership for `Xi`, nonzero-`Xi`, and the named real-zero
-theorem give RH through the discharged zeta-to-`Xi` transfer.
+Laguerre-Polya membership for `Xi` and the named real-zero theorem give RH
+through the discharged zeta-to-`Xi` transfer and the proved nonzero-`Xi` fact.
 -/
 theorem RH_from_LaguerrePolya_Xi
     (hzeros : LaguerrePolyaZerosRealTheorem)
-    (hLP : LaguerrePolyaClass Xi)
-    (hnonzero : NonzeroFunction Xi) :
+    (hLP : LaguerrePolyaClass Xi) :
     RiemannHypothesis :=
   RH_of_Xi_real_zeros
-    (allZerosReal_of_laguerrePolya hzeros hLP hnonzero)
+    (allZerosReal_of_laguerrePolya hzeros hLP Xi_nonzero)
 
 end RHLean
