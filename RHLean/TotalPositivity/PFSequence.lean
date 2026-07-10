@@ -73,6 +73,50 @@ theorem PFInfinitySequence.toeplitzMinor_nonnegative
     IsNonnegativeRealComplex (toeplitzMinor γ rows cols) :=
   hPF k rows cols hrows hcols
 
+/-- Every map out of `Fin 1` is strictly increasing. -/
+private theorem strictMono_fin_one_nat (indices : Fin 1 → Nat) :
+    StrictMono indices := by
+  intro i j hij
+  have hsub : i = j := Subsingleton.elim i j
+  subst j
+  exact False.elim ((lt_irrefl i) hij)
+
+/-- The `1 × 1` Toeplitz minor with row `n` and column `0` is the coefficient `γ n`. -/
+theorem toeplitzMinor_singleton_coeff
+    (γ : XiCoefficientSequence) (n : Nat) :
+    toeplitzMinor γ (fun _ : Fin 1 => n) (fun _ : Fin 1 => 0) = γ n := by
+  simp [toeplitzMinor, toeplitzMinorMatrix, toeplitzEntry]
+
+/-- A PF-infinity coefficient sequence has nonnegative-real coefficients. -/
+theorem PFInfinitySequence.coeff_nonnegative
+    {γ : XiCoefficientSequence}
+    (hPF : PFInfinitySequence γ)
+    (n : Nat) :
+    IsNonnegativeRealComplex (γ n) := by
+  simpa [toeplitzMinor_singleton_coeff] using
+    hPF.toeplitzMinor_nonnegative
+      (k := 1)
+      (rows := fun _ : Fin 1 => n)
+      (cols := fun _ : Fin 1 => 0)
+      (strictMono_fin_one_nat _)
+      (strictMono_fin_one_nat _)
+
+/-- A PF-infinity coefficient has zero imaginary part. -/
+theorem PFInfinitySequence.coeff_im_eq_zero
+    {γ : XiCoefficientSequence}
+    (hPF : PFInfinitySequence γ)
+    (n : Nat) :
+    (γ n).im = 0 :=
+  (hPF.coeff_nonnegative n).1
+
+/-- The real part of a PF-infinity coefficient is nonnegative. -/
+theorem PFInfinitySequence.coeff_re_nonnegative
+    {γ : XiCoefficientSequence}
+    (hPF : PFInfinitySequence γ)
+    (n : Nat) :
+    0 ≤ (γ n).re :=
+  (hPF.coeff_nonnegative n).2
+
 /-- The remaining hard total-positivity theorem needed by the Laguerre-Polya route. -/
 def TotalPositivityToLaguerrePolyaXi : Prop :=
   ∀ γ : XiCoefficientSequence,
