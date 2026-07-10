@@ -12,7 +12,7 @@ import Mathlib.Algebra.Polynomial.BigOperators
 
 This file records the minimal Jensen-polynomial branch of the dependency graph.
 The hard theorem turning hyperbolicity of all Jensen polynomials into a
-Laguerre-Polya certificate for `Xi` remains a named proposition.
+Laguerre-Polya membership statement for `Xi` remains a named proposition.
 -/
 
 noncomputable section
@@ -86,44 +86,54 @@ def JensenHyperbolicityToLaguerrePolyaXi : Prop :=
   ∀ γ : XiCoefficientSequence,
     IsXiCoefficientSequence γ →
       AllJensenPolynomialsHyperbolic γ →
-        Nonempty (LaguerrePolyaCertificate Xi)
+        Nonempty (LaguerrePolyaClass Xi)
 
-/-- The explicit theorem boundary from Jensen hyperbolicity to certificates for `Xi`. -/
-theorem exists_laguerrePolyaCertificate_Xi_of_jensenHyperbolicity
+/-- The explicit theorem boundary from Jensen hyperbolicity to Laguerre-Polya membership for `Xi`. -/
+theorem exists_laguerrePolyaClass_Xi_of_jensenHyperbolicity
     (hbridge : JensenHyperbolicityToLaguerrePolyaXi)
     {γ : XiCoefficientSequence}
     (hγ : IsXiCoefficientSequence γ)
     (hJensen : AllJensenPolynomialsHyperbolic γ) :
-    Nonempty (LaguerrePolyaCertificate Xi) :=
+    Nonempty (LaguerrePolyaClass Xi) :=
   hbridge γ hγ hJensen
 
-/-- A noncomputable certificate extracted from the named Jensen theorem boundary. -/
-def laguerrePolyaCertificateXiOfJensenHyperbolicity
+/-- Extract only Laguerre-Polya membership from the named Jensen theorem boundary. -/
+def laguerrePolyaClassXiOfJensenHyperbolicity
     (hbridge : JensenHyperbolicityToLaguerrePolyaXi)
     {γ : XiCoefficientSequence}
     (hγ : IsXiCoefficientSequence γ)
     (hJensen : AllJensenPolynomialsHyperbolic γ) :
-    LaguerrePolyaCertificate Xi :=
+    LaguerrePolyaClass Xi :=
   Classical.choice
-    (exists_laguerrePolyaCertificate_Xi_of_jensenHyperbolicity hbridge hγ hJensen)
+    (exists_laguerrePolyaClass_Xi_of_jensenHyperbolicity hbridge hγ hJensen)
 
-/-- The Jensen route gives RH once its named bridge supplies a Laguerre-Polya certificate. -/
+/--
+The Jensen route gives RH only after the separate Laguerre-Polya zero theorem
+and nonzero-`Xi` hypotheses are supplied explicitly.
+-/
 theorem RH_from_JensenHyperbolicity_Xi
     (hbridge : JensenHyperbolicityToLaguerrePolyaXi)
+    (hzeros : LaguerrePolyaZerosRealTheorem)
+    (hnonzero : NonzeroFunction Xi)
     {γ : XiCoefficientSequence}
     (hγ : IsXiCoefficientSequence γ)
     (hJensen : AllJensenPolynomialsHyperbolic γ) :
     RiemannHypothesis :=
-  RH_from_LaguerrePolya_Xi
-    (laguerrePolyaCertificateXiOfJensenHyperbolicity hbridge hγ hJensen)
+  RH_of_Xi_real_zeros
+    (allZerosReal_of_laguerrePolya
+      hzeros
+      (laguerrePolyaClassXiOfJensenHyperbolicity hbridge hγ hJensen)
+      hnonzero)
 
 /-- The existential Jensen-coefficient route gives RH through the named Jensen bridge. -/
 theorem RH_from_exists_XiCoefficientSequenceWithJensenHyperbolicity
     (hbridge : JensenHyperbolicityToLaguerrePolyaXi)
+    (hzeros : LaguerrePolyaZerosRealTheorem)
+    (hnonzero : NonzeroFunction Xi)
     (hcoeffs : ExistsXiCoefficientSequenceWithJensenHyperbolicity) :
     RiemannHypothesis :=
   match hcoeffs with
   | ⟨_, hγ, hJensen⟩ =>
-      RH_from_JensenHyperbolicity_Xi hbridge hγ hJensen
+      RH_from_JensenHyperbolicity_Xi hbridge hzeros hnonzero hγ hJensen
 
 end RHLean
