@@ -71,9 +71,16 @@ def JensenHyperbolicityToLaguerrePolyaXi : Prop :=
     IsXiCoefficientSequence gamma ->
       AllJensenPolynomialsHyperbolic gamma ->
         Nonempty (LaguerrePolyaCertificate Xi)
+
+def ExistsXiCoefficientSequenceWithJensenHyperbolicity : Prop :=
+  exists gamma : XiCoefficientSequence,
+    IsXiCoefficientSequence gamma /\ AllJensenPolynomialsHyperbolic gamma
 ```
 
-This is a named research theorem boundary. It does not use the total-positivity route, and it does not claim a proof of RH.
+These are named research theorem boundaries. The existential boundary packages
+the analytic existence of usable `Xi` coefficients instead of making downstream
+callers pick a sequence manually. It does not use the total-positivity route,
+and it does not claim a proof of RH.
 
 The total-positivity branch is represented as another separate route over the same xi coefficient object:
 
@@ -83,6 +90,12 @@ def TotalPositivityToLaguerrePolyaXi : Prop :=
     IsXiCoefficientSequence gamma ->
       PFInfinitySequence gamma ->
         Nonempty (LaguerrePolyaCertificate Xi)
+
+def ExistsXiCoefficientSequenceWithPFInfinity : Prop :=
+  exists gamma : XiCoefficientSequence,
+    IsXiCoefficientSequence gamma /\ PFInfinitySequence gamma
 ```
 
-This is also a named research theorem boundary. The PF-infinity interface records Toeplitz minor determinants explicitly for strictly increasing row and column index selections, and does not duplicate Jensen polynomial definitions.
+These are also named research theorem boundaries. The PF-infinity interface
+records Toeplitz minor determinants explicitly for strictly increasing row and
+column index selections, and does not duplicate Jensen polynomial definitions.

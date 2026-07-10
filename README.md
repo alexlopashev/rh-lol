@@ -13,7 +13,7 @@ Xi has only real zeros
 The longer route is:
 
 ```text
-Jensen polynomial hyperbolicity or total positivity for xi coefficients
+existence of Xi coefficients with Jensen hyperbolicity or PF-infinity
   -> Laguerre-Polya certificate for Xi
   -> Xi has only real zeros
   -> Mathlib.RiemannHypothesis
@@ -27,9 +27,9 @@ Initial formal spine:
 - `RHLean.CriticalLine`: defines zeta-zero predicates and the critical-line coordinate lemma.
 - `RHLean.RHBridge`: proves the zeta-to-`Xi` transfer from completed zeta definitions, then proves `RH_of_Xi_real_zeros` from the real-zero hypothesis.
 - `RHLean.XiCoefficients`: defines the shared `Xi` coefficient sequence interface.
-- `RHLean.Jensen.Polynomial`: defines the minimal Jensen polynomial route and its named bridge to a Laguerre-Polya certificate for `Xi`.
+- `RHLean.Jensen.Polynomial`: defines the minimal Jensen polynomial route, including its existential coefficient boundary and named bridge to a Laguerre-Polya certificate for `Xi`.
 - `RHLean.LaguerrePolya.Certificate`: defines the Laguerre-Polya class interface and the named theorem needed to turn nonzero membership into real zeros.
-- `RHLean.TotalPositivity.PFSequence`: defines the minimal PF-infinity / Toeplitz-minor route and its named bridge to a Laguerre-Polya certificate for `Xi`.
+- `RHLean.TotalPositivity.PFSequence`: defines the minimal PF-infinity / Toeplitz-minor route, including its existential coefficient boundary and named bridge to a Laguerre-Polya certificate for `Xi`.
 
 ## Setup
 

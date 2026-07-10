@@ -85,6 +85,9 @@ Acceptance:
 - The dependency graph makes the missing research theorem visible.
 
 Status: started in [#6](https://github.com/alexlopashev/rh-lol/issues/6) with a minimal `RHLean.Jensen.Polynomial` module and the named bridge `JensenHyperbolicityToLaguerrePolyaXi`.
+[#31](https://github.com/alexlopashev/rh-lol/issues/31) adds the explicit
+existential coefficient boundary `ExistsXiCoefficientSequenceWithJensenHyperbolicity`
+and the RH wrapper theorem through that bridge.
 
 ## Milestone 6: Total Positivity Route
 
@@ -100,6 +103,9 @@ Acceptance:
 - It does not duplicate Jensen definitions unless the math demands it.
 
 Status: started in [#7](https://github.com/alexlopashev/rh-lol/issues/7) with a minimal `RHLean.TotalPositivity.PFSequence` module and the named bridge `TotalPositivityToLaguerrePolyaXi`.
+[#31](https://github.com/alexlopashev/rh-lol/issues/31) adds the explicit
+existential coefficient boundary `ExistsXiCoefficientSequenceWithPFInfinity`
+and the RH wrapper theorem through that bridge.
 
 ## Milestone 7: Completed-Zeta Transfer Cleanup
 
