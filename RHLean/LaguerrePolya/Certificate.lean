@@ -131,4 +131,16 @@ theorem RH_from_LaguerrePolya_Xi
   RH_of_Xi_real_zeros
     (allZerosReal_of_laguerrePolya hzeros hLP Xi_nonzero)
 
+/--
+Laguerre-Polya membership for `Xi` and the narrower locally-uniform
+zero-preservation boundary give RH through the public Laguerre-Polya wrapper.
+-/
+theorem RH_from_locallyUniformRealRootedLimit_LaguerrePolya_Xi
+    (hlimit : LocallyUniformRealRootedLimitZerosRealTheorem)
+    (hLP : LaguerrePolyaClass Xi) :
+    RiemannHypothesis :=
+  RH_from_LaguerrePolya_Xi
+    (laguerrePolyaZerosRealTheorem_of_locallyUniformRealRootedLimit hlimit)
+    hLP
+
 end RHLean
