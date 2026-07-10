@@ -12,8 +12,8 @@ import Mathlib.Order.Monotone.Defs
 
 This file records a minimal Polya-frequency / total-positivity branch of the
 dependency graph.  The interface deliberately reuses the existing `Xi`
-coefficient sequence and Laguerre-Polya certificate objects instead of creating
-a parallel RH route.
+coefficient sequence and Jensen-polynomial route instead of creating a parallel
+RH route.
 -/
 
 noncomputable section
@@ -123,22 +123,6 @@ theorem PFInfinitySequence.coeff_re_nonnegative
     0 ≤ (γ n).re :=
   (hPF.coeff_nonnegative n).2
 
-/-- The remaining hard total-positivity theorem needed by the Laguerre-Polya route. -/
-def TotalPositivityToLaguerrePolyaXi : Prop :=
-  ∀ γ : XiCoefficientSequence,
-    IsXiCoefficientSequence γ →
-      PFInfinitySequence γ →
-        Nonempty (LaguerrePolyaCertificate Xi)
-
-/-- The explicit theorem boundary from PF-infinity coefficients to certificates for `Xi`. -/
-theorem exists_laguerrePolyaCertificate_Xi_of_totalPositivity
-    (hbridge : TotalPositivityToLaguerrePolyaXi)
-    {γ : XiCoefficientSequence}
-    (hγ : IsXiCoefficientSequence γ)
-    (hPF : PFInfinitySequence γ) :
-    Nonempty (LaguerrePolyaCertificate Xi) :=
-  hbridge γ hγ hPF
-
 /-- Apply the named PF-infinity to Jensen hyperbolicity boundary. -/
 theorem allJensenPolynomialsHyperbolic_of_pfInfinity
     (hbridge : PFInfinityToJensenHyperbolicity)
@@ -147,26 +131,6 @@ theorem allJensenPolynomialsHyperbolic_of_pfInfinity
     (hPF : PFInfinitySequence γ) :
     AllJensenPolynomialsHyperbolic γ :=
   hbridge γ hγ hPF
-
-/-- A noncomputable certificate extracted from the named total-positivity theorem boundary. -/
-def laguerrePolyaCertificateXiOfTotalPositivity
-    (hbridge : TotalPositivityToLaguerrePolyaXi)
-    {γ : XiCoefficientSequence}
-    (hγ : IsXiCoefficientSequence γ)
-    (hPF : PFInfinitySequence γ) :
-    LaguerrePolyaCertificate Xi :=
-  Classical.choice
-    (exists_laguerrePolyaCertificate_Xi_of_totalPositivity hbridge hγ hPF)
-
-/-- The total-positivity route gives RH once its named bridge supplies a Laguerre-Polya certificate. -/
-theorem RH_from_totalPositivity_Xi
-    (hbridge : TotalPositivityToLaguerrePolyaXi)
-    {γ : XiCoefficientSequence}
-    (hγ : IsXiCoefficientSequence γ)
-    (hPF : PFInfinitySequence γ) :
-    RiemannHypothesis :=
-  RH_from_LaguerrePolya_Xi
-    (laguerrePolyaCertificateXiOfTotalPositivity hbridge hγ hPF)
 
 /--
 The PF-infinity route gives RH through the Jensen boundary and the existing
@@ -184,16 +148,7 @@ theorem RH_from_PFInfinity_via_Jensen_Xi
     hγ
     (allJensenPolynomialsHyperbolic_of_pfInfinity hPFToJensen hγ hPF)
 
-/-- The existential PF-infinity coefficient route gives RH through total positivity. -/
-theorem RH_from_exists_XiCoefficientSequenceWithPFInfinity
-    (hbridge : TotalPositivityToLaguerrePolyaXi)
-    (hcoeffs : ExistsXiCoefficientSequenceWithPFInfinity) :
-    RiemannHypothesis :=
-  match hcoeffs with
-  | ⟨_, hγ, hPF⟩ =>
-      RH_from_totalPositivity_Xi hbridge hγ hPF
-
-/-- The existential PF-infinity route also factors through Jensen hyperbolicity. -/
+/-- The existential PF-infinity route factors through Jensen hyperbolicity. -/
 theorem RH_from_exists_XiCoefficientSequenceWithPFInfinity_via_Jensen
     (hPFToJensen : PFInfinityToJensenHyperbolicity)
     (hJensenBridge : JensenHyperbolicityToLaguerrePolyaXi)

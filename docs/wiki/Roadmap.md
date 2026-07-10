@@ -42,9 +42,9 @@ Tracking issue: [#6](https://github.com/alexlopashev/rh-lol/issues/6).
 
 ## Milestone 6: Total Positivity Route
 
-Define PF-infinity sequences, Toeplitz minors, and total positivity bridges.
+Define PF-infinity sequences, Toeplitz minors, and the total-positivity edge into Jensen hyperbolicity.
 
-Status: started in [#7](https://github.com/alexlopashev/rh-lol/issues/7) with a minimal `RHLean.TotalPositivity.PFSequence` module and the named bridge `TotalPositivityToLaguerrePolyaXi`.
+Status: started in [#7](https://github.com/alexlopashev/rh-lol/issues/7) with a minimal `RHLean.TotalPositivity.PFSequence` module. [#37](https://github.com/alexlopashev/rh-lol/issues/37) adds the named PF-infinity to Jensen boundary, and [#39](https://github.com/alexlopashev/rh-lol/issues/39) routes the public PF-infinity RH wrapper through that boundary.
 
 ## Milestone 7: Completed-Zeta Transfer Cleanup
 

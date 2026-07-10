@@ -25,7 +25,6 @@ Current core objects:
 - `IsIncreasingNatSelection : (Fin k -> Nat) -> Prop`
 - `PFInfinitySequence : XiCoefficientSequence -> Prop`
 - `toeplitzMinor : XiCoefficientSequence -> (Fin k -> Nat) -> (Fin k -> Nat) -> Complex`
-- `TotalPositivityToLaguerrePolyaXi : Prop`
 - `PFInfinityToJensenHyperbolicity : Prop`
 
 Current bridge theorem:
@@ -83,15 +82,9 @@ the analytic existence of usable `Xi` coefficients instead of making downstream
 callers pick a sequence manually. It does not use the total-positivity route,
 and it does not claim a proof of RH.
 
-The total-positivity branch is represented as another separate route over the same xi coefficient object:
+The total-positivity branch is represented as a separate route into the Jensen branch over the same xi coefficient object:
 
 ```lean
-def TotalPositivityToLaguerrePolyaXi : Prop :=
-  forall gamma : XiCoefficientSequence,
-    IsXiCoefficientSequence gamma ->
-      PFInfinitySequence gamma ->
-        Nonempty (LaguerrePolyaCertificate Xi)
-
 def PFInfinityToJensenHyperbolicity : Prop :=
   forall gamma : XiCoefficientSequence,
     IsXiCoefficientSequence gamma ->
@@ -106,5 +99,6 @@ def ExistsXiCoefficientSequenceWithPFInfinity : Prop :=
 These are also named research theorem boundaries. The PF-infinity interface
 records Toeplitz minor determinants explicitly for strictly increasing row and
 column index selections. The `PFInfinityToJensenHyperbolicity` boundary records
-the separate dependency edge from PF-infinity coefficients to Jensen
-hyperbolicity without duplicating Jensen polynomial definitions.
+the dependency edge from PF-infinity coefficients to Jensen hyperbolicity
+without duplicating Jensen polynomial definitions or adding a direct
+certificate-producing route.
