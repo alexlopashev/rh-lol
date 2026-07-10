@@ -1,7 +1,7 @@
 The core dependency spine is:
 
 ```text
-Laguerre-Polya membership plus nonzero Xi plus the named zero theorem
+Laguerre-Polya membership plus proved nonzero Xi plus the named zero theorem
   -> all zeros of Xi are real
   -> all nontrivial zeta zeros lie on the critical line
   -> Mathlib.RiemannHypothesis
@@ -58,19 +58,21 @@ def NonzeroFunction (F : Complex -> Complex) : Prop :=
 def LaguerrePolyaZerosRealTheorem : Prop :=
   forall {F : Complex -> Complex},
     LaguerrePolyaClass F -> NonzeroFunction F -> AllZerosReal F
+
+theorem Xi_nonzero : NonzeroFunction Xi
 ```
 
-The public Laguerre-Polya RH wrapper keeps all three inputs visible:
+The public Laguerre-Polya RH wrapper keeps the hard inputs visible and supplies
+the `Xi` nonzero fact internally:
 
 ```lean
 theorem RH_from_LaguerrePolya_Xi
     (hzeros : LaguerrePolyaZerosRealTheorem)
-    (hLP : LaguerrePolyaClass Xi)
-    (hnonzero : NonzeroFunction Xi) :
+    (hLP : LaguerrePolyaClass Xi) :
     RiemannHypothesis
 ```
 
-It derives `AllZerosReal Xi` from membership, nonzero-`Xi`, and the named zero
+It derives `AllZerosReal Xi` from membership, `Xi_nonzero`, and the named zero
 theorem. This is not a direct wrapper around `AllZerosReal`.
 
 The Jensen branch is represented as a separate route over the shared `XiCoefficientSequence` interface:
@@ -93,8 +95,9 @@ callers pick a sequence manually. It does not use the total-positivity route,
 and it does not claim a proof of RH.
 
 The Jensen RH wrappers do not construct a certificate behind the bridge. They
-take `LaguerrePolyaZerosRealTheorem` and `NonzeroFunction Xi` as explicit inputs
-alongside the Jensen-to-membership theorem before deriving `AllZerosReal Xi`.
+take `LaguerrePolyaZerosRealTheorem` as an explicit input alongside the
+Jensen-to-membership theorem, and reuse `Xi_nonzero` before deriving
+`AllZerosReal Xi`.
 
 The total-positivity branch is represented as a separate route into the Jensen branch over the same xi coefficient object:
 

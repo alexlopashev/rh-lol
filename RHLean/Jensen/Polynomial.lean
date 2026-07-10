@@ -108,32 +108,28 @@ def laguerrePolyaClassXiOfJensenHyperbolicity
     (exists_laguerrePolyaClass_Xi_of_jensenHyperbolicity hbridge hγ hJensen)
 
 /--
-The Jensen route gives RH only after the separate Laguerre-Polya zero theorem
-and nonzero-`Xi` hypotheses are supplied explicitly.
+The Jensen route gives RH after the separate Laguerre-Polya zero theorem is
+supplied; nonzero-`Xi` is proved once in the Laguerre-Polya bridge.
 -/
 theorem RH_from_JensenHyperbolicity_Xi
     (hbridge : JensenHyperbolicityToLaguerrePolyaXi)
     (hzeros : LaguerrePolyaZerosRealTheorem)
-    (hnonzero : NonzeroFunction Xi)
     {γ : XiCoefficientSequence}
     (hγ : IsXiCoefficientSequence γ)
     (hJensen : AllJensenPolynomialsHyperbolic γ) :
     RiemannHypothesis :=
-  RH_of_Xi_real_zeros
-    (allZerosReal_of_laguerrePolya
-      hzeros
-      (laguerrePolyaClassXiOfJensenHyperbolicity hbridge hγ hJensen)
-      hnonzero)
+  RH_from_LaguerrePolya_Xi
+    hzeros
+    (laguerrePolyaClassXiOfJensenHyperbolicity hbridge hγ hJensen)
 
 /-- The existential Jensen-coefficient route gives RH through the named Jensen bridge. -/
 theorem RH_from_exists_XiCoefficientSequenceWithJensenHyperbolicity
     (hbridge : JensenHyperbolicityToLaguerrePolyaXi)
     (hzeros : LaguerrePolyaZerosRealTheorem)
-    (hnonzero : NonzeroFunction Xi)
     (hcoeffs : ExistsXiCoefficientSequenceWithJensenHyperbolicity) :
     RiemannHypothesis :=
   match hcoeffs with
   | ⟨_, hγ, hJensen⟩ =>
-      RH_from_JensenHyperbolicity_Xi hbridge hzeros hnonzero hγ hJensen
+      RH_from_JensenHyperbolicity_Xi hbridge hzeros hγ hJensen
 
 end RHLean
