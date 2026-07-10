@@ -102,7 +102,10 @@ theorem RH_from_LaguerrePolya_Xi
 It derives `AllZerosReal Xi` from membership, `Xi_nonzero`, and the named zero
 theorem. This is not a direct wrapper around `AllZerosReal`.
 
-The Jensen branch is represented as a separate route over the shared `XiCoefficientSequence` interface:
+The Jensen branch is represented as a separate route over the shared `XiCoefficientSequence` interface.
+The coefficient certificate contains the pointwise power-series identity, the
+entire and real-on-real facts for `Xi`, and local-uniform convergence of the
+degree-`d` Jensen approximants based at `0`.
 
 ```lean
 def JensenHyperbolicityToLaguerrePolyaXi : Prop :=
@@ -111,19 +114,22 @@ def JensenHyperbolicityToLaguerrePolyaXi : Prop :=
       AllJensenPolynomialsHyperbolic gamma ->
         Nonempty (LaguerrePolyaClass Xi)
 
+theorem jensenHyperbolicityToLaguerrePolyaXi :
+  JensenHyperbolicityToLaguerrePolyaXi
+
 def ExistsXiCoefficientSequenceWithJensenHyperbolicity : Prop :=
   exists gamma : XiCoefficientSequence,
     IsXiCoefficientSequence gamma /\ AllJensenPolynomialsHyperbolic gamma
 ```
 
-These are named research theorem boundaries. The existential boundary packages
-the analytic existence of usable `Xi` coefficients instead of making downstream
-callers pick a sequence manually. It does not use the total-positivity route,
-and it does not claim a proof of RH.
+The existential boundary packages the analytic existence of usable `Xi`
+coefficients, including the Jensen approximant convergence certificate, instead
+of making downstream callers pick a sequence manually. It does not use the
+total-positivity route, and it does not claim a proof of RH.
 
-The Jensen RH wrappers do not construct a certificate behind the bridge. They
-take `LaguerrePolyaZerosRealTheorem` as an explicit input alongside the
-Jensen-to-membership theorem, and reuse `Xi_nonzero` before deriving
+The Jensen RH wrappers construct the Laguerre-Polya certificate from the
+coefficient certificate and Jensen hyperbolicity. They take
+`LaguerrePolyaZerosRealTheorem` as an explicit input, and reuse `Xi_nonzero` before deriving
 `AllZerosReal Xi`.
 
 The total-positivity branch is represented as a separate route into the Jensen branch over the same xi coefficient object:
