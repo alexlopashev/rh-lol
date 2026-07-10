@@ -66,11 +66,15 @@ Deliverables:
 - Keep `LaguerrePolyaZerosRealTheorem`, `LaguerrePolyaClass Xi`, and
   the proved `Xi_nonzero` fact visible at the `RH_from_LaguerrePolya_Xi`
   boundary until the real theorem is formalized.
+- Expose the narrower locally-uniform zero-preservation boundary as a direct
+  RH wrapper without claiming that boundary has been proved.
 
 Acceptance:
 
 - The public RH wrapper derives `AllZerosReal Xi` from membership, the proved
   nonzero-`Xi` fact, and the named zero theorem rather than a packaged certificate.
+- The local-uniform RH wrapper factors through the broader Laguerre-Polya zero
+  theorem wrapper instead of duplicating the proof path.
 - The unformalized classical zero-preservation step is named separately from
   the broader Laguerre-Polya membership-to-real-zeros theorem.
 - The general zero-function exclusion remains visible in the named Laguerre-Polya
@@ -94,8 +98,9 @@ Status: started in [#6](https://github.com/alexlopashev/rh-lol/issues/6) with a 
 existential coefficient boundary `ExistsXiCoefficientSequenceWithJensenHyperbolicity`
 and the RH wrapper theorem through that bridge.
 The Jensen bridge supplies only `Nonempty (LaguerrePolyaClass Xi)`; the RH
-wrappers still require the named `LaguerrePolyaZerosRealTheorem`, while
-nonzero-`Xi` is supplied internally by `Xi_nonzero`.
+wrappers can require either the named `LaguerrePolyaZerosRealTheorem` or the
+narrower `LocallyUniformRealRootedLimitZerosRealTheorem`, while nonzero-`Xi` is
+supplied internally by `Xi_nonzero`.
 
 ## Milestone 6: Total Positivity Route
 
