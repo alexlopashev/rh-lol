@@ -26,6 +26,7 @@ Current core objects:
 - `PFInfinitySequence : XiCoefficientSequence -> Prop`
 - `toeplitzMinor : XiCoefficientSequence -> (Fin k -> Nat) -> (Fin k -> Nat) -> Complex`
 - `TotalPositivityToLaguerrePolyaXi : Prop`
+- `PFInfinityToJensenHyperbolicity : Prop`
 
 Current bridge theorem:
 
@@ -91,6 +92,12 @@ def TotalPositivityToLaguerrePolyaXi : Prop :=
       PFInfinitySequence gamma ->
         Nonempty (LaguerrePolyaCertificate Xi)
 
+def PFInfinityToJensenHyperbolicity : Prop :=
+  forall gamma : XiCoefficientSequence,
+    IsXiCoefficientSequence gamma ->
+      PFInfinitySequence gamma ->
+        AllJensenPolynomialsHyperbolic gamma
+
 def ExistsXiCoefficientSequenceWithPFInfinity : Prop :=
   exists gamma : XiCoefficientSequence,
     IsXiCoefficientSequence gamma /\ PFInfinitySequence gamma
@@ -98,4 +105,6 @@ def ExistsXiCoefficientSequenceWithPFInfinity : Prop :=
 
 These are also named research theorem boundaries. The PF-infinity interface
 records Toeplitz minor determinants explicitly for strictly increasing row and
-column index selections, and does not duplicate Jensen polynomial definitions.
+column index selections. The `PFInfinityToJensenHyperbolicity` boundary records
+the separate dependency edge from PF-infinity coefficients to Jensen
+hyperbolicity without duplicating Jensen polynomial definitions.
