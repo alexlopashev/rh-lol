@@ -94,21 +94,23 @@ and the RH wrapper theorem through that bridge.
 Deliverables:
 
 - Define PF-infinity sequences and Toeplitz minors.
-- Connect total positivity to a Laguerre-Polya certificate.
+- Connect total positivity to Jensen hyperbolicity.
 - Relate the formal route to xi coefficient objects.
 
 Acceptance:
 
-- The route is available as an alternative dependency branch.
+- The route is available as an explicit dependency edge into the Jensen branch.
 - It does not duplicate Jensen definitions unless the math demands it.
 
-Status: started in [#7](https://github.com/alexlopashev/rh-lol/issues/7) with a minimal `RHLean.TotalPositivity.PFSequence` module and the named bridge `TotalPositivityToLaguerrePolyaXi`.
+Status: started in [#7](https://github.com/alexlopashev/rh-lol/issues/7) with a minimal `RHLean.TotalPositivity.PFSequence` module.
 [#31](https://github.com/alexlopashev/rh-lol/issues/31) adds the explicit
-existential coefficient boundary `ExistsXiCoefficientSequenceWithPFInfinity`
-and the RH wrapper theorem through that bridge.
+existential coefficient boundary `ExistsXiCoefficientSequenceWithPFInfinity`.
 [#37](https://github.com/alexlopashev/rh-lol/issues/37) adds the named
 boundary `PFInfinityToJensenHyperbolicity`, making the PF-infinity to Jensen
-hyperbolicity edge explicit without replacing either hard theorem.
+hyperbolicity edge explicit.
+[#39](https://github.com/alexlopashev/rh-lol/issues/39) routes the public
+PF-infinity RH wrapper through that Jensen edge and the existing
+Jensen-to-Laguerre-Polya bridge.
 
 ## Milestone 7: Completed-Zeta Transfer Cleanup
 

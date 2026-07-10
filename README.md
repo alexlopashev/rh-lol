@@ -13,7 +13,8 @@ Xi has only real zeros
 The longer route is:
 
 ```text
-existence of Xi coefficients with Jensen hyperbolicity or PF-infinity
+existence of Xi coefficients with PF-infinity
+  -> Jensen hyperbolicity for Xi coefficients
   -> Laguerre-Polya certificate for Xi
   -> Xi has only real zeros
   -> Mathlib.RiemannHypothesis
@@ -29,7 +30,7 @@ Initial formal spine:
 - `RHLean.XiCoefficients`: defines the shared `Xi` coefficient sequence interface.
 - `RHLean.Jensen.Polynomial`: defines the minimal Jensen polynomial route, including its existential coefficient boundary and named bridge to a Laguerre-Polya certificate for `Xi`.
 - `RHLean.LaguerrePolya.Certificate`: defines the Laguerre-Polya class interface and the named theorem needed to turn nonzero membership into real zeros.
-- `RHLean.TotalPositivity.PFSequence`: defines the minimal PF-infinity / Toeplitz-minor route, including its existential coefficient boundary and named bridge to a Laguerre-Polya certificate for `Xi`.
+- `RHLean.TotalPositivity.PFSequence`: defines the minimal PF-infinity / Toeplitz-minor route, including its existential coefficient boundary and named bridge to Jensen hyperbolicity.
 
 ## Setup
 
