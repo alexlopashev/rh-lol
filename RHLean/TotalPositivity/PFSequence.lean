@@ -6,6 +6,7 @@ Authors: Sasha Lopashev
 import RHLean.LaguerrePolya.Certificate
 import RHLean.XiCoefficients
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.Order.Monotone.Defs
 
 /-!
 # Total positivity route for Xi coefficients
@@ -23,6 +24,10 @@ namespace RHLean
 /-- A complex number regarded as a nonnegative real value. -/
 def IsNonnegativeRealComplex (z : Complex) : Prop :=
   z.im = 0 ∧ 0 ≤ z.re
+
+/-- A strictly increasing finite selection of natural-number indices. -/
+def IsIncreasingNatSelection {k : Nat} (indices : Fin k → Nat) : Prop :=
+  StrictMono indices
 
 /-- Entry of the one-sided Toeplitz matrix attached to a coefficient sequence. -/
 def toeplitzEntry (γ : XiCoefficientSequence) (row col : Nat) : Complex :=
@@ -45,13 +50,24 @@ def toeplitzMinor
 
 /-- Conservative PF-infinity interface for a coefficient sequence.
 
-This placeholder asks every finite Toeplitz minor selected by row and column
-maps to be a nonnegative real complex number.  Future work can refine the index
-maps to strictly increasing selections without changing the downstream bridge.
+This placeholder asks every finite Toeplitz minor selected by strictly
+increasing row and column index maps to be a nonnegative real complex number.
 -/
 def PFInfinitySequence (γ : XiCoefficientSequence) : Prop :=
   ∀ k : Nat, ∀ rows cols : Fin k → Nat,
-    IsNonnegativeRealComplex (toeplitzMinor γ rows cols)
+    IsIncreasingNatSelection rows →
+      IsIncreasingNatSelection cols →
+        IsNonnegativeRealComplex (toeplitzMinor γ rows cols)
+
+/-- Apply a PF-infinity hypothesis to one increasing Toeplitz minor selection. -/
+theorem PFInfinitySequence.toeplitzMinor_nonnegative
+    {γ : XiCoefficientSequence}
+    (hPF : PFInfinitySequence γ)
+    {k : Nat} {rows cols : Fin k → Nat}
+    (hrows : IsIncreasingNatSelection rows)
+    (hcols : IsIncreasingNatSelection cols) :
+    IsNonnegativeRealComplex (toeplitzMinor γ rows cols) :=
+  hPF k rows cols hrows hcols
 
 /-- The remaining hard total-positivity theorem needed by the Laguerre-Polya route. -/
 def TotalPositivityToLaguerrePolyaXi : Prop :=
