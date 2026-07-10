@@ -9,7 +9,7 @@ Every mathematically hard step must be isolated behind a named theorem, definiti
 The initial spine is:
 
 ```text
-Laguerre-Polya certificate for Xi
+Laguerre-Polya membership plus nonzero Xi plus the named zero theorem
   -> all zeros of Xi are real
   -> all nontrivial zeta zeros lie on the critical line
   -> Mathlib.RiemannHypothesis
@@ -40,7 +40,7 @@ If Lean is not installed locally, record that explicitly in the PR or handoff an
 - `RHLean/ZetaXi.lean`: `xi`, `Xi`, and completed-zeta definitions.
 - `RHLean/CriticalLine.lean`: zero predicates, critical-line predicates, coordinate algebra.
 - `RHLean/RHBridge.lean`: bridge from `AllZerosReal Xi` to `RiemannHypothesis`.
-- `RHLean/LaguerrePolya/`: certificate interface and later Laguerre-Polya class work.
+- `RHLean/LaguerrePolya/`: class interface, named zero theorem boundary, and later Laguerre-Polya class work.
 - `docs/`: roadmap, codestyle, and wiki source pages.
 - `scripts/`: local CI and publication helpers.
 

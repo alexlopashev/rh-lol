@@ -9,7 +9,7 @@ import Mathlib.Analysis.Analytic.Basic
 import Mathlib.Topology.UniformSpace.LocallyUniformConvergence
 
 /-!
-# Laguerre-Polya certificate interface
+# Laguerre-Polya class interface
 
 This file records a conservative Mathlib-compatible interface for the
 Laguerre-Polya class.  The hard classical theorem that nonzero membership
@@ -75,20 +75,16 @@ theorem allZerosReal_of_laguerrePolya
     AllZerosReal F :=
   hzeros hLP hnonzero
 
-/-- A certificate packages Laguerre-Polya membership with the named hard theorem. -/
-structure LaguerrePolyaCertificate (F : Complex → Complex) where
-  /-- The target function belongs to the Laguerre-Polya class interface. -/
-  membership : LaguerrePolyaClass F
-  /-- The target function is not identically zero. -/
-  nonzero : NonzeroFunction F
-  /-- The named theorem turning Laguerre-Polya membership into real zeros. -/
-  zeros_real_theorem : LaguerrePolyaZerosRealTheorem
-
-/-- A Laguerre-Polya certificate for `Xi` gives RH through the discharged zeta-to-`Xi` transfer. -/
+/--
+Laguerre-Polya membership for `Xi`, nonzero-`Xi`, and the named real-zero
+theorem give RH through the discharged zeta-to-`Xi` transfer.
+-/
 theorem RH_from_LaguerrePolya_Xi
-    (hLP : LaguerrePolyaCertificate Xi) :
+    (hzeros : LaguerrePolyaZerosRealTheorem)
+    (hLP : LaguerrePolyaClass Xi)
+    (hnonzero : NonzeroFunction Xi) :
     RiemannHypothesis :=
   RH_of_Xi_real_zeros
-    (allZerosReal_of_laguerrePolya hLP.zeros_real_theorem hLP.membership hLP.nonzero)
+    (allZerosReal_of_laguerrePolya hzeros hLP hnonzero)
 
 end RHLean

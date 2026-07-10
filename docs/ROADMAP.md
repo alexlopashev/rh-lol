@@ -1,6 +1,6 @@
 # Roadmap
 
-This roadmap is organized around a verified formal spine first, then progressively replacing thin certificates with real Mathlib-backed mathematics.
+This roadmap is organized around a verified formal spine first, then progressively replacing named theorem boundaries with real Mathlib-backed mathematics.
 
 ## Milestone 0: Repository Operating System
 
@@ -57,19 +57,22 @@ Acceptance:
 
 Status: completed in [#20](https://github.com/alexlopashev/rh-lol/issues/20) after the completed-zeta transfer was discharged in [#19](https://github.com/alexlopashev/rh-lol/issues/19). `RH_of_Xi_real_zeros` now depends only on `AllZerosReal Xi`; the remaining unproved RH route work stays behind named Laguerre-Polya, Jensen, and total-positivity theorem boundaries.
 
-## Milestone 4: Real Laguerre-Polya Certificate
+## Milestone 4: Real Laguerre-Polya Boundary
 
 Deliverables:
 
 - Define the Laguerre-Polya class or a conservative Mathlib-compatible interface for it.
 - Prove membership plus an explicit nonzero-target hypothesis implies all zeros are real.
-- Replace the temporary `LaguerrePolyaCertificate.zeros_real` field.
+- Keep `LaguerrePolyaZerosRealTheorem`, `LaguerrePolyaClass Xi`, and
+  `NonzeroFunction Xi` visible at the public `RH_from_LaguerrePolya_Xi`
+  boundary until the real theorem is formalized.
 
 Acceptance:
 
-- The certificate is no longer just a wrapper around `AllZerosReal`.
+- The public RH wrapper derives `AllZerosReal Xi` from membership, nonzero-`Xi`,
+  and the named zero theorem rather than a packaged certificate.
 - Any unformalized classical theorem is a single named theorem with a precise statement.
-- The zero-function exclusion is visible at the certificate boundary, not hidden in prose.
+- The zero-function exclusion is visible at the wrapper boundary, not hidden in prose.
 
 ## Milestone 5: Jensen Polynomial Route
 

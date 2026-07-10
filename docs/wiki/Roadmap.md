@@ -28,9 +28,9 @@ Keep the transfer explicit and checked. The scaffold now proves `completedZetaZe
 
 Status: completed through [#19](https://github.com/alexlopashev/rh-lol/issues/19) and [#20](https://github.com/alexlopashev/rh-lol/issues/20). This discharges the completed-zeta-to-`Xi` transfer; it does not claim RH, because the route to `AllZerosReal Xi` is still represented by named Laguerre-Polya, Jensen, and total-positivity theorem boundaries.
 
-## Milestone 4: Real Laguerre-Polya Certificate
+## Milestone 4: Real Laguerre-Polya Boundary
 
-Replace the temporary certificate wrapper with real definitions and a theorem proving real zeros.
+Replace the named `LaguerrePolyaZerosRealTheorem` boundary with real definitions and a theorem proving that Laguerre-Polya membership plus nonzero implies real zeros.
 
 Tracking issue: [#5](https://github.com/alexlopashev/rh-lol/issues/5).
 

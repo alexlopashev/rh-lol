@@ -35,7 +35,7 @@ scripts/
 
 `RHLean/XiCoefficients.lean` owns the shared coefficient-sequence interface for the `Xi` power series.
 
-`RHLean/Jensen/Polynomial.lean` owns the minimal Jensen polynomial route: Jensen polynomials, real hyperbolicity, and the named bridge to a Laguerre-Polya certificate for `Xi`.
+`RHLean/Jensen/Polynomial.lean` owns the minimal Jensen polynomial route: Jensen polynomials, real hyperbolicity, and the named bridge to Laguerre-Polya membership for `Xi`.
 
 `RHLean/LaguerrePolya/Certificate.lean` owns the Laguerre-Polya class interface and the named theorem boundary from class membership, plus a nonzero-target hypothesis, to real zeros.
 

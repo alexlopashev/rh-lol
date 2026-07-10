@@ -1,7 +1,7 @@
 The core dependency spine is:
 
 ```text
-Laguerre-Polya certificate for Xi
+Laguerre-Polya membership plus nonzero Xi plus the named zero theorem
   -> all zeros of Xi are real
   -> all nontrivial zeta zeros lie on the critical line
   -> Mathlib.RiemannHypothesis
@@ -17,7 +17,6 @@ Current core objects:
 - `ZetaZerosTransferToXi : ...`
 - `LaguerrePolyaClass : (Complex -> Complex) -> Type`
 - `LaguerrePolyaZerosRealTheorem : Prop`
-- `LaguerrePolyaCertificate : (Complex -> Complex) -> Type`
 - `XiCoefficientSequence : Type`
 - `IsXiCoefficientSequence : XiCoefficientSequence -> Prop`
 - `JensenPolynomial : XiCoefficientSequence -> Nat -> Nat -> Polynomial Complex`
@@ -61,7 +60,18 @@ def LaguerrePolyaZerosRealTheorem : Prop :=
     LaguerrePolyaClass F -> NonzeroFunction F -> AllZerosReal F
 ```
 
-`LaguerrePolyaCertificate` packages membership in this class, an explicit nonzero-target witness, and that named theorem. It is not a direct wrapper around `AllZerosReal`.
+The public Laguerre-Polya RH wrapper keeps all three inputs visible:
+
+```lean
+theorem RH_from_LaguerrePolya_Xi
+    (hzeros : LaguerrePolyaZerosRealTheorem)
+    (hLP : LaguerrePolyaClass Xi)
+    (hnonzero : NonzeroFunction Xi) :
+    RiemannHypothesis
+```
+
+It derives `AllZerosReal Xi` from membership, nonzero-`Xi`, and the named zero
+theorem. This is not a direct wrapper around `AllZerosReal`.
 
 The Jensen branch is represented as a separate route over the shared `XiCoefficientSequence` interface:
 
