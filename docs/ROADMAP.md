@@ -106,6 +106,9 @@ Status: started in [#7](https://github.com/alexlopashev/rh-lol/issues/7) with a 
 [#31](https://github.com/alexlopashev/rh-lol/issues/31) adds the explicit
 existential coefficient boundary `ExistsXiCoefficientSequenceWithPFInfinity`
 and the RH wrapper theorem through that bridge.
+[#37](https://github.com/alexlopashev/rh-lol/issues/37) adds the named
+boundary `PFInfinityToJensenHyperbolicity`, making the PF-infinity to Jensen
+hyperbolicity edge explicit without replacing either hard theorem.
 
 ## Milestone 7: Completed-Zeta Transfer Cleanup
 
