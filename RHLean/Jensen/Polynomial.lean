@@ -26,6 +26,49 @@ def JensenPolynomial (γ : XiCoefficientSequence) (n d : Nat) : Polynomial Compl
   Finset.sum (Finset.range (d + 1)) fun j =>
     Polynomial.C (((Nat.choose d j : Nat) : Complex) * γ (n + j)) * Polynomial.X ^ j
 
+/-- In-range coefficients of the Jensen polynomial are the expected binomial-weighted entries. -/
+theorem coeff_JensenPolynomial_of_le
+    (γ : XiCoefficientSequence) (n d j : Nat) (hj : j ≤ d) :
+    (JensenPolynomial γ n d).coeff j =
+      ((Nat.choose d j : Nat) : Complex) * γ (n + j) := by
+  rw [JensenPolynomial, Polynomial.finsetSum_coeff]
+  rw [Finset.sum_eq_single j]
+  · rw [Polynomial.coeff_C_mul_X_pow, if_pos rfl]
+  · intro k _ hk
+    rw [Polynomial.coeff_C_mul_X_pow, if_neg hk.symm]
+  · intro hnot
+    exact (hnot (Finset.mem_range.mpr (Nat.lt_succ_of_le hj))).elim
+
+/-- Coefficients above the Jensen polynomial's defining range vanish. -/
+theorem coeff_JensenPolynomial_eq_zero_of_gt
+    (γ : XiCoefficientSequence) (n d j : Nat) (hj : d < j) :
+    (JensenPolynomial γ n d).coeff j = 0 := by
+  rw [JensenPolynomial, Polynomial.finsetSum_coeff]
+  apply Finset.sum_eq_zero
+  intro k hk
+  have hk_le : k ≤ d := Nat.lt_succ_iff.mp (Finset.mem_range.mp hk)
+  have hkj : j ≠ k := (lt_of_le_of_lt hk_le hj).ne'
+  rw [Polynomial.coeff_C_mul_X_pow, if_neg hkj]
+
+/-- The Jensen polynomial has no support outside the range used in its finite-sum definition. -/
+theorem support_JensenPolynomial_subset_range
+    (γ : XiCoefficientSequence) (n d : Nat) :
+    (JensenPolynomial γ n d).support ⊆ Finset.range (d + 1) := by
+  intro j hj
+  rw [Finset.mem_range]
+  rw [Polynomial.mem_support_iff] at hj
+  by_contra hnot
+  have hdj : d < j := Nat.lt_of_not_ge fun hjd => hnot (Nat.lt_succ_of_le hjd)
+  exact hj (coeff_JensenPolynomial_eq_zero_of_gt γ n d j hdj)
+
+/-- The Jensen polynomial has degree at most `d`. -/
+theorem natDegree_JensenPolynomial_le
+    (γ : XiCoefficientSequence) (n d : Nat) :
+    (JensenPolynomial γ n d).natDegree ≤ d := by
+  rw [Polynomial.natDegree_le_iff_coeff_eq_zero]
+  intro j hj
+  exact coeff_JensenPolynomial_eq_zero_of_gt γ n d j hj
+
 /-- Hyperbolicity over the reals, expressed through the existing real-rooted interface. -/
 def PolynomialHyperbolicOverReal (p : Polynomial Complex) : Prop :=
   RealRootedPolynomial p
