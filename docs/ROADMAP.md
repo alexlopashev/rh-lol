@@ -88,6 +88,9 @@ Status: started in [#6](https://github.com/alexlopashev/rh-lol/issues/6) with a 
 [#31](https://github.com/alexlopashev/rh-lol/issues/31) adds the explicit
 existential coefficient boundary `ExistsXiCoefficientSequenceWithJensenHyperbolicity`
 and the RH wrapper theorem through that bridge.
+The Jensen bridge supplies only `Nonempty (LaguerrePolyaClass Xi)`; the RH
+wrappers still require the named `LaguerrePolyaZerosRealTheorem` and
+`NonzeroFunction Xi` boundaries explicitly.
 
 ## Milestone 6: Total Positivity Route
 
@@ -110,7 +113,8 @@ boundary `PFInfinityToJensenHyperbolicity`, making the PF-infinity to Jensen
 hyperbolicity edge explicit.
 [#39](https://github.com/alexlopashev/rh-lol/issues/39) routes the public
 PF-infinity RH wrapper through that Jensen edge and the existing
-Jensen-to-Laguerre-Polya bridge.
+Jensen-to-Laguerre-Polya membership bridge, with the Laguerre-Polya zero theorem
+and nonzero-`Xi` boundary still explicit.
 
 ## Milestone 7: Completed-Zeta Transfer Cleanup
 

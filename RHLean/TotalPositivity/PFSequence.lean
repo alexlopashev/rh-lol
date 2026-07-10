@@ -133,18 +133,23 @@ theorem allJensenPolynomialsHyperbolic_of_pfInfinity
   hbridge γ hγ hPF
 
 /--
-The PF-infinity route gives RH through the Jensen boundary and the existing
-Jensen-to-Laguerre-Polya bridge.
+The PF-infinity route gives RH through the Jensen boundary, the Jensen-to-
+Laguerre-Polya membership bridge, and explicit Laguerre-Polya zero/nonzero
+hypotheses.
 -/
 theorem RH_from_PFInfinity_via_Jensen_Xi
     (hPFToJensen : PFInfinityToJensenHyperbolicity)
     (hJensenBridge : JensenHyperbolicityToLaguerrePolyaXi)
+    (hzeros : LaguerrePolyaZerosRealTheorem)
+    (hnonzero : NonzeroFunction Xi)
     {γ : XiCoefficientSequence}
     (hγ : IsXiCoefficientSequence γ)
     (hPF : PFInfinitySequence γ) :
     RiemannHypothesis :=
   RH_from_JensenHyperbolicity_Xi
     hJensenBridge
+    hzeros
+    hnonzero
     hγ
     (allJensenPolynomialsHyperbolic_of_pfInfinity hPFToJensen hγ hPF)
 
@@ -152,10 +157,12 @@ theorem RH_from_PFInfinity_via_Jensen_Xi
 theorem RH_from_exists_XiCoefficientSequenceWithPFInfinity_via_Jensen
     (hPFToJensen : PFInfinityToJensenHyperbolicity)
     (hJensenBridge : JensenHyperbolicityToLaguerrePolyaXi)
+    (hzeros : LaguerrePolyaZerosRealTheorem)
+    (hnonzero : NonzeroFunction Xi)
     (hcoeffs : ExistsXiCoefficientSequenceWithPFInfinity) :
     RiemannHypothesis :=
   match hcoeffs with
   | ⟨_, hγ, hPF⟩ =>
-      RH_from_PFInfinity_via_Jensen_Xi hPFToJensen hJensenBridge hγ hPF
+      RH_from_PFInfinity_via_Jensen_Xi hPFToJensen hJensenBridge hzeros hnonzero hγ hPF
 
 end RHLean

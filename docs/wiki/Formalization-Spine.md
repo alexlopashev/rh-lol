@@ -70,7 +70,7 @@ def JensenHyperbolicityToLaguerrePolyaXi : Prop :=
   forall gamma : XiCoefficientSequence,
     IsXiCoefficientSequence gamma ->
       AllJensenPolynomialsHyperbolic gamma ->
-        Nonempty (LaguerrePolyaCertificate Xi)
+        Nonempty (LaguerrePolyaClass Xi)
 
 def ExistsXiCoefficientSequenceWithJensenHyperbolicity : Prop :=
   exists gamma : XiCoefficientSequence,
@@ -81,6 +81,10 @@ These are named research theorem boundaries. The existential boundary packages
 the analytic existence of usable `Xi` coefficients instead of making downstream
 callers pick a sequence manually. It does not use the total-positivity route,
 and it does not claim a proof of RH.
+
+The Jensen RH wrappers do not construct a certificate behind the bridge. They
+take `LaguerrePolyaZerosRealTheorem` and `NonzeroFunction Xi` as explicit inputs
+alongside the Jensen-to-membership theorem before deriving `AllZerosReal Xi`.
 
 The total-positivity branch is represented as a separate route into the Jensen branch over the same xi coefficient object:
 
