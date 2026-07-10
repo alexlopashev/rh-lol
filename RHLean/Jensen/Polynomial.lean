@@ -34,6 +34,10 @@ def PolynomialHyperbolicOverReal (p : Polynomial Complex) : Prop :=
 def AllJensenPolynomialsHyperbolic (γ : XiCoefficientSequence) : Prop :=
   ∀ n d : Nat, PolynomialHyperbolicOverReal (JensenPolynomial γ n d)
 
+/-- There exists an `Xi` coefficient sequence whose Jensen polynomials are all hyperbolic. -/
+def ExistsXiCoefficientSequenceWithJensenHyperbolicity : Prop :=
+  ∃ γ : XiCoefficientSequence, IsXiCoefficientSequence γ ∧ AllJensenPolynomialsHyperbolic γ
+
 /-- The remaining hard Jensen-polynomial theorem needed by the Laguerre-Polya route. -/
 def JensenHyperbolicityToLaguerrePolyaXi : Prop :=
   ∀ γ : XiCoefficientSequence,
@@ -69,5 +73,14 @@ theorem RH_from_JensenHyperbolicity_Xi
     RiemannHypothesis :=
   RH_from_LaguerrePolya_Xi
     (laguerrePolyaCertificateXiOfJensenHyperbolicity hbridge hγ hJensen)
+
+/-- The existential Jensen-coefficient route gives RH through the named Jensen bridge. -/
+theorem RH_from_exists_XiCoefficientSequenceWithJensenHyperbolicity
+    (hbridge : JensenHyperbolicityToLaguerrePolyaXi)
+    (hcoeffs : ExistsXiCoefficientSequenceWithJensenHyperbolicity) :
+    RiemannHypothesis :=
+  match hcoeffs with
+  | ⟨_, hγ, hJensen⟩ =>
+      RH_from_JensenHyperbolicity_Xi hbridge hγ hJensen
 
 end RHLean

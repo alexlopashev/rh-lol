@@ -59,6 +59,10 @@ def PFInfinitySequence (γ : XiCoefficientSequence) : Prop :=
       IsIncreasingNatSelection cols →
         IsNonnegativeRealComplex (toeplitzMinor γ rows cols)
 
+/-- There exists an `Xi` coefficient sequence satisfying the PF-infinity condition. -/
+def ExistsXiCoefficientSequenceWithPFInfinity : Prop :=
+  ∃ γ : XiCoefficientSequence, IsXiCoefficientSequence γ ∧ PFInfinitySequence γ
+
 /-- Apply a PF-infinity hypothesis to one increasing Toeplitz minor selection. -/
 theorem PFInfinitySequence.toeplitzMinor_nonnegative
     {γ : XiCoefficientSequence}
@@ -104,5 +108,14 @@ theorem RH_from_totalPositivity_Xi
     RiemannHypothesis :=
   RH_from_LaguerrePolya_Xi
     (laguerrePolyaCertificateXiOfTotalPositivity hbridge hγ hPF)
+
+/-- The existential PF-infinity coefficient route gives RH through total positivity. -/
+theorem RH_from_exists_XiCoefficientSequenceWithPFInfinity
+    (hbridge : TotalPositivityToLaguerrePolyaXi)
+    (hcoeffs : ExistsXiCoefficientSequenceWithPFInfinity) :
+    RiemannHypothesis :=
+  match hcoeffs with
+  | ⟨_, hγ, hPF⟩ =>
+      RH_from_totalPositivity_Xi hbridge hγ hPF
 
 end RHLean
