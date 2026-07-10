@@ -30,6 +30,27 @@ normalization `1 / 2 * (s * (s - 1) * completedRiemannZeta₀ s + 1)`.
 def xi (s : Complex) : Complex :=
   (1 / 2 : Complex) * (s * (s - 1) * completedRiemannZeta₀ s + 1)
 
+/-- The repo's `xi` normalization is an entire complex function. -/
+theorem differentiable_xi : Differentiable Complex xi := by
+  have h_id : Differentiable Complex (fun s : Complex => s) := differentiable_id
+  have h_const_one : Differentiable Complex (fun _s : Complex => (1 : Complex)) :=
+    differentiable_const (c := (1 : Complex))
+  have h_const_half : Differentiable Complex (fun _s : Complex => (1 / 2 : Complex)) :=
+    differentiable_const (c := (1 / 2 : Complex))
+  have h_sub_one : Differentiable Complex (fun s : Complex => s - 1) :=
+    h_id.sub h_const_one
+  have h_prefactor : Differentiable Complex (fun s : Complex => s * (s - 1)) :=
+    h_id.mul h_sub_one
+  have h_product :
+      Differentiable Complex (fun s : Complex => s * (s - 1) * completedRiemannZeta₀ s) :=
+    h_prefactor.mul differentiable_completedZeta₀
+  have h_sum :
+      Differentiable Complex (fun s : Complex => s * (s - 1) * completedRiemannZeta₀ s + 1) :=
+    h_product.add h_const_one
+  change Differentiable Complex
+    (fun s : Complex => (1 / 2 : Complex) * (s * (s - 1) * completedRiemannZeta₀ s + 1))
+  simpa [one_div] using h_sum.const_mul (1 / 2 : Complex)
+
 /-- Multiplying by `s * (s - 1)` cancels the two pole-correction terms in
 Mathlib's `completedRiemannZeta_eq` formula. -/
 lemma completedRiemannZeta_pole_correction_factor
@@ -62,6 +83,18 @@ Zeros of `Xi` with real input correspond to zeros of `xi` on `re s = 1 / 2`.
 -/
 def Xi (z : Complex) : Complex :=
   xi ((1 / 2 : Complex) + Complex.I * z)
+
+/-- The critical-line transform `Xi` is an entire complex function. -/
+theorem differentiable_Xi : Differentiable Complex Xi := by
+  have h_const_half : Differentiable Complex (fun _z : Complex => (1 / 2 : Complex)) :=
+    differentiable_const (c := (1 / 2 : Complex))
+  have h_I_mul : Differentiable Complex (fun z : Complex => Complex.I * z) :=
+    differentiable_id.const_mul Complex.I
+  have h_line :
+      Differentiable Complex (fun z : Complex => (1 / 2 : Complex) + Complex.I * z) :=
+    h_const_half.add h_I_mul
+  change Differentiable Complex (fun z : Complex => xi ((1 / 2 : Complex) + Complex.I * z))
+  simpa [one_div] using differentiable_xi.fun_comp h_line
 
 /-- The inverse critical-line transform recovers the original xi input. -/
 theorem Xi_neg_I_mul_sub_half (s : Complex) :
