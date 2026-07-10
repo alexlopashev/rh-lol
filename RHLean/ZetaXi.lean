@@ -47,7 +47,7 @@ theorem differentiable_xi : Differentiable Complex xi := by
   have h_sum :
       Differentiable Complex (fun s : Complex => s * (s - 1) * completedRiemannZeta₀ s + 1) :=
     h_product.add h_const_one
-  simpa [xi] using h_const_half.mul h_sum
+  simpa [xi] using h_sum.const_mul (1 / 2 : Complex)
 
 /-- Multiplying by `s * (s - 1)` cancels the two pole-correction terms in
 Mathlib's `completedRiemannZeta_eq` formula. -/
@@ -86,13 +86,12 @@ def Xi (z : Complex) : Complex :=
 theorem differentiable_Xi : Differentiable Complex Xi := by
   have h_const_half : Differentiable Complex (fun _z : Complex => (1 / 2 : Complex)) :=
     differentiable_const (c := (1 / 2 : Complex))
-  have h_const_I : Differentiable Complex (fun _z : Complex => Complex.I) :=
-    differentiable_const (c := Complex.I)
+  have h_I_mul : Differentiable Complex (fun z : Complex => Complex.I * z) :=
+    differentiable_id.const_mul Complex.I
   have h_line :
       Differentiable Complex (fun z : Complex => (1 / 2 : Complex) + Complex.I * z) :=
-    h_const_half.add (h_const_I.mul differentiable_id)
-  show Differentiable Complex (fun z : Complex => xi ((1 / 2 : Complex) + Complex.I * z))
-  simpa only [Function.comp_apply] using differentiable_xi.comp h_line
+    h_const_half.add h_I_mul
+  simpa [Xi] using differentiable_xi.fun_comp h_line
 
 /-- The inverse critical-line transform recovers the original xi input. -/
 theorem Xi_neg_I_mul_sub_half (s : Complex) :
