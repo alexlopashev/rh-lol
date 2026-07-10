@@ -86,16 +86,67 @@ theorem Xi_nonzero : NonzeroFunction Xi := by
   rw [Xi_neg_I_mul_sub_half]
   exact xi_one_ne_zero
 
-/-- The hard zero-preservation theorem for locally uniform real-rooted limits.
+/-- Pointwise zero-preservation boundary for locally uniform real-rooted limits.
 
-This is the analytic boundary where Hurwitz-style zero preservation and the
-locally uniform limit argument belong.  The nonzero-target hypothesis is
-explicit because the zero function can be a locally uniform limit of real-rooted
-polynomials but does not satisfy `AllZerosReal`.
+This is a narrower replacement target for the public
+`LocallyUniformRealRootedLimitZerosRealTheorem`: once a specific zero of a
+nonzero locally uniform real-rooted limit is fixed, the hard analysis should
+prove that the zero lies on the real axis.
+-/
+def LocallyUniformRealRootedLimitZeroRealTheorem : Prop :=
+  ∀ {F : Complex → Complex} {p : Nat → Polynomial Complex} {z : Complex},
+    LocallyUniformRealRootedApproximation F p → NonzeroFunction F → F z = 0 → z.im = 0
+
+/-- Off-real-axis zero exclusion boundary for locally uniform real-rooted limits.
+
+Future Hurwitz-style work can target this form directly: a nonzero locally
+uniform limit of real-rooted polynomials has no zeros away from the real axis.
+-/
+def LocallyUniformRealRootedLimitOffRealAxisZeroExclusionTheorem : Prop :=
+  ∀ {F : Complex → Complex} {p : Nat → Polynomial Complex} {z : Complex},
+    LocallyUniformRealRootedApproximation F p → NonzeroFunction F → z.im ≠ 0 → F z ≠ 0
+
+/-- Public zero-preservation theorem for locally uniform real-rooted limits.
+
+This compatibility wrapper keeps the existing RH route stable while narrower
+boundaries above isolate the pointwise zero and off-real-axis exclusion forms of
+the remaining hard analysis.  The nonzero-target hypothesis is explicit because
+the zero function can be a locally uniform limit of real-rooted polynomials but
+does not satisfy `AllZerosReal`.
 -/
 def LocallyUniformRealRootedLimitZerosRealTheorem : Prop :=
   ∀ {F : Complex → Complex} {p : Nat → Polynomial Complex},
     LocallyUniformRealRootedApproximation F p → NonzeroFunction F → AllZerosReal F
+
+/--
+Excluding off-real-axis zeros is enough to prove the pointwise real-zero
+boundary.
+-/
+theorem locallyUniformRealRootedLimitZeroReal_of_offRealAxisZeroExclusion
+    (hexclude : LocallyUniformRealRootedLimitOffRealAxisZeroExclusionTheorem) :
+    LocallyUniformRealRootedLimitZeroRealTheorem := by
+  intro F p z happrox hnonzero hz
+  by_contra hnonreal
+  exact hexclude happrox hnonzero hnonreal hz
+
+/--
+The pointwise real-zero boundary recovers the public all-zeros-real boundary.
+-/
+theorem locallyUniformRealRootedLimitZerosRealTheorem_of_limitZeroReal
+    (hzero : LocallyUniformRealRootedLimitZeroRealTheorem) :
+    LocallyUniformRealRootedLimitZerosRealTheorem := by
+  intro F p happrox hnonzero z hz
+  exact hzero happrox hnonzero hz
+
+/--
+The off-real-axis exclusion boundary recovers the public all-zeros-real
+boundary.
+-/
+theorem locallyUniformRealRootedLimitZerosRealTheorem_of_offRealAxisZeroExclusion
+    (hexclude : LocallyUniformRealRootedLimitOffRealAxisZeroExclusionTheorem) :
+    LocallyUniformRealRootedLimitZerosRealTheorem :=
+  locallyUniformRealRootedLimitZerosRealTheorem_of_limitZeroReal
+    (locallyUniformRealRootedLimitZeroReal_of_offRealAxisZeroExclusion hexclude)
 
 /-- The remaining hard Laguerre-Polya theorem needed by the RH spine. -/
 def LaguerrePolyaZerosRealTheorem : Prop :=
@@ -141,6 +192,30 @@ theorem RH_from_locallyUniformRealRootedLimit_LaguerrePolya_Xi
     RiemannHypothesis :=
   RH_from_LaguerrePolya_Xi
     (laguerrePolyaZerosRealTheorem_of_locallyUniformRealRootedLimit hlimit)
+    hLP
+
+/--
+Laguerre-Polya membership for `Xi` and the pointwise local-uniform real-zero
+boundary give RH through the public local-uniform wrapper.
+-/
+theorem RH_from_locallyUniformLimitZeroReal_LaguerrePolya_Xi
+    (hzero : LocallyUniformRealRootedLimitZeroRealTheorem)
+    (hLP : LaguerrePolyaClass Xi) :
+    RiemannHypothesis :=
+  RH_from_locallyUniformRealRootedLimit_LaguerrePolya_Xi
+    (locallyUniformRealRootedLimitZerosRealTheorem_of_limitZeroReal hzero)
+    hLP
+
+/--
+Laguerre-Polya membership for `Xi` and off-real-axis zero exclusion give RH
+through the public local-uniform wrapper.
+-/
+theorem RH_from_locallyUniformOffRealAxisZeroExclusion_LaguerrePolya_Xi
+    (hexclude : LocallyUniformRealRootedLimitOffRealAxisZeroExclusionTheorem)
+    (hLP : LaguerrePolyaClass Xi) :
+    RiemannHypothesis :=
+  RH_from_locallyUniformRealRootedLimit_LaguerrePolya_Xi
+    (locallyUniformRealRootedLimitZerosRealTheorem_of_offRealAxisZeroExclusion hexclude)
     hLP
 
 end RHLean

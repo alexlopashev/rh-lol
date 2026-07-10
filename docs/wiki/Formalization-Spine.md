@@ -17,6 +17,8 @@ Current core objects:
 - `ZetaZerosTransferToXi : ...`
 - `LaguerrePolyaClass : (Complex -> Complex) -> Type`
 - `LocallyUniformRealRootedApproximation : (Complex -> Complex) -> (Nat -> Polynomial Complex) -> Prop`
+- `LocallyUniformRealRootedLimitZeroRealTheorem : Prop`
+- `LocallyUniformRealRootedLimitOffRealAxisZeroExclusionTheorem : Prop`
 - `LocallyUniformRealRootedLimitZerosRealTheorem : Prop`
 - `LaguerrePolyaZerosRealTheorem : Prop`
 - `XiCoefficientSequence : Type`
@@ -63,6 +65,14 @@ def LocallyUniformRealRootedApproximation
   (forall n : Nat, RealRootedPolynomial (p n)) /\
     TendstoLocallyUniformlyOn
       (fun (n : Nat) (z : Complex) => (p n).eval z) F Filter.atTop Set.univ
+
+def LocallyUniformRealRootedLimitZeroRealTheorem : Prop :=
+  forall {F : Complex -> Complex} {p : Nat -> Polynomial Complex} {z : Complex},
+    LocallyUniformRealRootedApproximation F p -> NonzeroFunction F -> F z = 0 -> z.im = 0
+
+def LocallyUniformRealRootedLimitOffRealAxisZeroExclusionTheorem : Prop :=
+  forall {F : Complex -> Complex} {p : Nat -> Polynomial Complex} {z : Complex},
+    LocallyUniformRealRootedApproximation F p -> NonzeroFunction F -> z.im ≠ 0 -> F z ≠ 0
 
 def LocallyUniformRealRootedLimitZerosRealTheorem : Prop :=
   forall {F : Complex -> Complex} {p : Nat -> Polynomial Complex},

@@ -76,7 +76,9 @@ Acceptance:
 - The local-uniform RH wrapper factors through the broader Laguerre-Polya zero
   theorem wrapper instead of duplicating the proof path.
 - The unformalized classical zero-preservation step is named separately from
-  the broader Laguerre-Polya membership-to-real-zeros theorem.
+  the broader Laguerre-Polya membership-to-real-zeros theorem, with pointwise
+  zero-real and off-real-axis zero-exclusion boundaries available below the
+  public compatibility wrapper.
 - The general zero-function exclusion remains visible in the named Laguerre-Polya
   theorem, while the `Xi` instance is supplied by `Xi_nonzero`.
 
@@ -98,9 +100,10 @@ Status: started in [#6](https://github.com/alexlopashev/rh-lol/issues/6) with a 
 existential coefficient boundary `ExistsXiCoefficientSequenceWithJensenHyperbolicity`
 and the RH wrapper theorem through that bridge.
 The Jensen bridge supplies only `Nonempty (LaguerrePolyaClass Xi)`; the RH
-wrappers can require either the named `LaguerrePolyaZerosRealTheorem` or the
-narrower `LocallyUniformRealRootedLimitZerosRealTheorem`, while nonzero-`Xi` is
-supplied internally by `Xi_nonzero`.
+wrappers can require the named `LaguerrePolyaZerosRealTheorem`, the public
+`LocallyUniformRealRootedLimitZerosRealTheorem`, or one of the narrower
+pointwise/off-real local-uniform boundaries, while nonzero-`Xi` is supplied
+internally by `Xi_nonzero`.
 
 ## Milestone 6: Total Positivity Route
 
