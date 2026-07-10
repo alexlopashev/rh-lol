@@ -69,6 +69,20 @@ def PFInfinityToJensenHyperbolicity : Prop :=
       PFInfinitySequence γ →
         AllJensenPolynomialsHyperbolic γ
 
+/--
+Finite Polya-frequency zero-location theorem needed after the real-coefficient
+bookkeeping is discharged below.
+
+This is narrower than `PFInfinityToJensenHyperbolicity`: it no longer mentions
+`Xi`, `IsXiCoefficientSequence`, or the real-coefficient part of hyperbolicity.
+It is the remaining ASW/PF theorem for the current one-sided Toeplitz-minor
+normalization and the binomially weighted Jensen polynomials.
+-/
+def PFInfinityJensenZerosRealTheorem : Prop :=
+  ∀ γ : XiCoefficientSequence,
+    PFInfinitySequence γ →
+      ∀ n d : Nat, PolynomialZerosReal (JensenPolynomial γ n d)
+
 /-- Apply a PF-infinity hypothesis to one increasing Toeplitz minor selection. -/
 theorem PFInfinitySequence.toeplitzMinor_nonnegative
     {γ : XiCoefficientSequence}
@@ -92,6 +106,18 @@ theorem toeplitzMinor_singleton_coeff
     (γ : XiCoefficientSequence) (n : Nat) :
     toeplitzMinor γ (fun _ : Fin 1 => n) (fun _ : Fin 1 => 0) = γ n := by
   simp [toeplitzMinor, toeplitzMinorMatrix, toeplitzEntry]
+
+/--
+The `j`th Jensen coefficient is the binomial weight times the singleton
+Toeplitz minor selecting the shifted coefficient `γ (n + j)`.
+-/
+theorem coeff_JensenPolynomial_eq_choose_mul_toeplitzMinor_singleton
+    (γ : XiCoefficientSequence) (n d j : Nat) (hj : j ≤ d) :
+    (JensenPolynomial γ n d).coeff j =
+      ((Nat.choose d j : Nat) : Complex) *
+        toeplitzMinor γ (fun _ : Fin 1 => n + j) (fun _ : Fin 1 => 0) := by
+  rw [coeff_JensenPolynomial_of_le γ n d j hj]
+  rw [toeplitzMinor_singleton_coeff]
 
 /-- A PF-infinity coefficient sequence has nonnegative-real coefficients. -/
 theorem PFInfinitySequence.coeff_nonnegative
@@ -122,6 +148,36 @@ theorem PFInfinitySequence.coeff_re_nonnegative
     (n : Nat) :
     0 ≤ (γ n).re :=
   (hPF.coeff_nonnegative n).2
+
+/--
+PF-infinity supplies the real-coefficient part of Jensen hyperbolicity.
+
+The only remaining finite theorem is zero-location for the binomially weighted
+Jensen polynomial; see `PFInfinityJensenZerosRealTheorem`.
+-/
+theorem hasRealCoefficients_JensenPolynomial_of_pfInfinity
+    {γ : XiCoefficientSequence}
+    (hPF : PFInfinitySequence γ)
+    (n d : Nat) :
+    HasRealCoefficients (JensenPolynomial γ n d) := by
+  intro j
+  by_cases hj : j ≤ d
+  · rw [coeff_JensenPolynomial_of_le γ n d j hj]
+    simp [Complex.mul_im, hPF.coeff_im_eq_zero (n + j)]
+  · rw [coeff_JensenPolynomial_eq_zero_of_gt γ n d j (Nat.lt_of_not_ge hj)]
+    simp
+
+/--
+The finite PF zero-location theorem discharges the public
+`PFInfinityToJensenHyperbolicity` bridge.
+-/
+theorem pfInfinityToJensenHyperbolicity_of_jensenZerosReal
+    (hzeros : PFInfinityJensenZerosRealTheorem) :
+    PFInfinityToJensenHyperbolicity := by
+  intro γ _hγ hPF n d
+  exact
+    { real_coefficients := hasRealCoefficients_JensenPolynomial_of_pfInfinity hPF n d
+      zeros_real := hzeros γ hPF n d }
 
 /-- Apply the named PF-infinity to Jensen hyperbolicity boundary. -/
 theorem allJensenPolynomialsHyperbolic_of_pfInfinity
