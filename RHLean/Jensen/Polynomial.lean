@@ -175,13 +175,17 @@ theorem RealRootedPolynomial.comp_positive_real_mul_X
       | zero => simp
       | succ n ih => simp [pow_succ, Complex.mul_im, ih]
     simp [Complex.mul_im, hp.real_coefficients n, hcpow]
-  · intro z hz
-    have hroot : p.eval ((c : Complex) * z) = 0 := by
-      simpa [Polynomial.eval_comp] using hz
-    have him := hp.zeros_real ((c : Complex) * z) hroot
-    simp only [Complex.mul_im, Complex.ofReal_im, zero_mul, Complex.ofReal_re,
-      add_zero] at him
-    exact (mul_eq_zero.mp him).resolve_left hc.ne'
+  · rcases hp.zeros_real with hpzero | hzeros
+    · left
+      simp [hpzero]
+    · right
+      intro z hz
+      have hroot : p.eval ((c : Complex) * z) = 0 := by
+        simpa [Polynomial.eval_comp] using hz
+      have him := hzeros ((c : Complex) * z) hroot
+      simp only [Complex.mul_im, Complex.ofReal_im, zero_mul, Complex.ofReal_re,
+        add_zero] at him
+      exact (mul_eq_zero.mp him).resolve_left hc.ne'
 
 /-- The explicit normalized Jensen approximants remain real-rooted. -/
 theorem realRootedPolynomial_normalizedJensenPolynomial
