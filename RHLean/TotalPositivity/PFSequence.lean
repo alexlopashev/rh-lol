@@ -194,14 +194,12 @@ Laguerre-Polya membership bridge, and the explicit Laguerre-Polya zero theorem.
 -/
 theorem RH_from_PFInfinity_via_Jensen_Xi
     (hPFToJensen : PFInfinityToJensenHyperbolicity)
-    (hJensenBridge : JensenHyperbolicityToLaguerrePolyaXi)
     (hzeros : LaguerrePolyaZerosRealTheorem)
     {γ : XiCoefficientSequence}
     (hγ : IsXiCoefficientSequence γ)
     (hPF : PFInfinitySequence γ) :
     RiemannHypothesis :=
   RH_from_JensenHyperbolicity_Xi
-    hJensenBridge
     hzeros
     hγ
     (allJensenPolynomialsHyperbolic_of_pfInfinity hPFToJensen hγ hPF)
@@ -209,12 +207,11 @@ theorem RH_from_PFInfinity_via_Jensen_Xi
 /-- The existential PF-infinity route factors through Jensen hyperbolicity. -/
 theorem RH_from_exists_XiCoefficientSequenceWithPFInfinity_via_Jensen
     (hPFToJensen : PFInfinityToJensenHyperbolicity)
-    (hJensenBridge : JensenHyperbolicityToLaguerrePolyaXi)
     (hzeros : LaguerrePolyaZerosRealTheorem)
     (hcoeffs : ExistsXiCoefficientSequenceWithPFInfinity) :
     RiemannHypothesis :=
   match hcoeffs with
   | ⟨_, hγ, hPF⟩ =>
-      RH_from_PFInfinity_via_Jensen_Xi hPFToJensen hJensenBridge hzeros hγ hPF
+      RH_from_PFInfinity_via_Jensen_Xi hPFToJensen hzeros hγ hPF
 
 end RHLean

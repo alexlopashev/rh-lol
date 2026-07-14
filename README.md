@@ -28,8 +28,8 @@ Initial formal spine:
 - `RHLean.ZetaXi`: defines `xi` and `Xi`.
 - `RHLean.CriticalLine`: defines zeta-zero predicates and the critical-line coordinate lemma.
 - `RHLean.RHBridge`: proves the zeta-to-`Xi` transfer from completed zeta definitions, then proves `RH_of_Xi_real_zeros` from the real-zero hypothesis.
-- `RHLean.XiCoefficients`: defines the shared `Xi` coefficient sequence interface.
-- `RHLean.Jensen.Polynomial`: defines the minimal Jensen polynomial route, including its existential coefficient boundary and named bridge to Laguerre-Polya membership for `Xi`.
+- `RHLean.XiCoefficients`: defines the shared exponential-generating `Xi` coefficient interface and its canonical Taylor-derivative witness.
+- `RHLean.Jensen.Polynomial`: defines the Jensen route, including the explicit `z / (d + 1)` normalization and the proved locally uniform convergence from the coefficient series.
 - `RHLean.LaguerrePolya.Certificate`: defines the Laguerre-Polya class interface, the nonzero-target predicate, proves `Xi_nonzero`, and records pointwise/off-real local-uniform zero-preservation boundaries plus the compatibility wrapper used by the public RH route.
 - `RHLean.TotalPositivity.PFSequence`: defines the minimal PF-infinity / Toeplitz-minor route, including its existential coefficient boundary and named bridge to Jensen hyperbolicity.
 

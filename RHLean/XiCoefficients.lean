@@ -17,19 +17,24 @@ noncomputable section
 
 namespace RHLean
 
-/-- A candidate coefficient sequence for the power-series expansion of `Xi`. -/
+/-- A candidate exponential-generating coefficient sequence for `Xi`. -/
 abbrev XiCoefficientSequence :=
   Nat → Complex
 
-/-- The sequence `γ` is a power-series coefficient sequence for `Xi` at `0`. -/
+/--
+The sequence `γ` is an exponential-generating coefficient sequence for `Xi` at
+`0`.  This is the normalization used by Jensen polynomials: `γ n` is divided by
+`n!` in the power series.
+-/
 def IsXiCoefficientSequence (γ : XiCoefficientSequence) : Prop :=
-  ∀ z : Complex, HasSum (fun n : Nat => γ n * z ^ n) (Xi z)
+  ∀ z : Complex,
+    HasSum (fun n : Nat => ((n.factorial : Complex)⁻¹ * γ n) * z ^ n) (Xi z)
 
-/-- The canonical Taylor coefficient sequence for `Xi` at `0`. -/
+/-- The canonical Jensen/Taylor coefficient sequence for `Xi` at `0`. -/
 def XiTaylorCoefficientSequence : XiCoefficientSequence :=
-  fun n : Nat => ((n.factorial : Complex)⁻¹) * iteratedDeriv n Xi 0
+  fun n : Nat => iteratedDeriv n Xi 0
 
-/-- The canonical Taylor coefficients sum to `Xi` on the whole complex plane. -/
+/-- The canonical exponential-generating Taylor coefficients sum to `Xi`. -/
 theorem isXiCoefficientSequence_XiTaylorCoefficientSequence :
     IsXiCoefficientSequence XiTaylorCoefficientSequence := by
   intro z

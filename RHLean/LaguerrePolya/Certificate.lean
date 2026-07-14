@@ -28,14 +28,29 @@ open Complex
 def HasRealCoefficients (p : Polynomial Complex) : Prop :=
   ∀ n : Nat, (p.coeff n).im = 0
 
-/-- A complex polynomial is real-rooted when all of its complex zeros lie on the real axis. -/
+/--
+A complex polynomial is real-rooted when it is the zero polynomial or all of
+its complex zeros lie on the real axis.
+
+Admitting the zero polynomial matches the standard degenerate convention for
+hyperbolicity and is necessary for Jensen families whose coefficient sequence
+contains zeros.
+-/
 def PolynomialZerosReal (p : Polynomial Complex) : Prop :=
-  ∀ z : Complex, p.eval z = 0 → z.im = 0
+  p = 0 ∨ ∀ z : Complex, p.eval z = 0 → z.im = 0
 
 /-- Polynomial approximants allowed in the Laguerre-Polya closure definition. -/
 structure RealRootedPolynomial (p : Polynomial Complex) : Prop where
   real_coefficients : HasRealCoefficients p
   zeros_real : PolynomialZerosReal p
+
+/-- The zero polynomial is admitted as a degenerate real-rooted polynomial. -/
+theorem realRootedPolynomial_zero :
+    RealRootedPolynomial (0 : Polynomial Complex) := by
+  constructor
+  · intro n
+    simp
+  · exact Or.inl rfl
 
 /-- A conservative analytic interface for the real Laguerre-Polya class.
 

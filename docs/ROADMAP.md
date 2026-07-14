@@ -98,9 +98,13 @@ Acceptance:
 Status: started in [#6](https://github.com/alexlopashev/rh-lol/issues/6) with a minimal `RHLean.Jensen.Polynomial` module and the named bridge `JensenHyperbolicityToLaguerrePolyaXi`.
 [#31](https://github.com/alexlopashev/rh-lol/issues/31) adds the explicit
 existential coefficient boundary `ExistsXiCoefficientSequenceWithJensenHyperbolicity`
-and the RH wrapper theorem through that bridge.
-The Jensen bridge supplies only `Nonempty (LaguerrePolyaClass Xi)`; the RH
-wrappers can require the named `LaguerrePolyaZerosRealTheorem`, the public
+and the RH wrapper theorem through that bridge. [#55](https://github.com/alexlopashev/rh-lol/issues/55)
+discharges `JensenHyperbolicityToLaguerrePolyaXi` from the exponential-generating
+coefficient identity and Jensen hyperbolicity. The proof uses the explicit
+degree-`d` normalization `z ↦ z / (d + 1)`, proves that positive rescaling
+preserves the real-rooted interface, and derives locally uniform convergence by
+dominated convergence rather than assuming it in the coefficient interface.
+The RH wrappers can require the named `LaguerrePolyaZerosRealTheorem`, the public
 `LocallyUniformRealRootedLimitZerosRealTheorem`, or one of the narrower
 pointwise/off-real local-uniform boundaries, while nonzero-`Xi` is supplied
 internally by `Xi_nonzero`.
