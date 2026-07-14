@@ -49,7 +49,7 @@ theorem realRootedPolynomial_zero :
     RealRootedPolynomial (0 : Polynomial Complex) := by
   constructor
   · intro n
-    simp [HasRealCoefficients]
+    simp
   · exact Or.inl rfl
 
 /-- A conservative analytic interface for the real Laguerre-Polya class.
