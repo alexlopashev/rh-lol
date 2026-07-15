@@ -23,11 +23,15 @@ Current core objects:
 - `LaguerrePolyaZerosRealTheorem : Prop`
 - `XiCoefficientSequence : Type`
 - `IsXiCoefficientSequence : XiCoefficientSequence -> Prop`
+- `XiEvenCoefficientSequence : Type`
+- `IsXiEvenCoefficientSequence : XiEvenCoefficientSequence -> Prop`
+- `XiEvenTaylorCoefficientSequence : XiEvenCoefficientSequence`
+- `xiCoefficientSequenceOfEven : XiEvenCoefficientSequence -> XiCoefficientSequence`
 - `JensenPolynomial : XiCoefficientSequence -> Nat -> Nat -> Polynomial Complex`
 - `JensenHyperbolicityToLaguerrePolyaXi : Prop`
 - `IsIncreasingNatSelection : (Fin k -> Nat) -> Prop`
-- `PFInfinitySequence : XiCoefficientSequence -> Prop`
-- `toeplitzMinor : XiCoefficientSequence -> (Fin k -> Nat) -> (Fin k -> Nat) -> Complex`
+- `PFInfinitySequence : XiEvenCoefficientSequence -> Prop`
+- `toeplitzMinor : XiEvenCoefficientSequence -> (Fin k -> Nat) -> (Fin k -> Nat) -> Complex`
 - `PFInfinityToJensenHyperbolicity : Prop`
 
 Current bridge theorem:
@@ -125,34 +129,53 @@ def ExistsXiCoefficientSequenceWithJensenHyperbolicity : Prop :=
     IsXiCoefficientSequence gamma /\ AllJensenPolynomialsHyperbolic gamma
 ```
 
-The canonical coefficient witness is the sequence of iterated derivatives of
-`Xi` at `0`; Mathlib's entire Taylor-series theorem proves its coefficient
-identity. The existential boundary packages a usable sequence instead of making
-downstream callers pick one manually. It does not use the total-positivity route,
-and it does not claim a proof of RH.
+The raw canonical coefficient witness is the sequence of iterated derivatives
+of `Xi` at `0`; Mathlib's entire Taylor-series theorem proves its coefficient
+identity. This is the sequence consumed by the normalized Jensen convergence
+theorem, but it is not the sequence to which total positivity is applied.
+
+The total-positivity normalization is instead the canonical centered-even
+sequence
+
+```lean
+XiEvenTaylorCoefficientSequence n =
+  n! / (2 * n)! * iteratedDeriv (2 * n) xi (1 / 2)
+```
+
+Its proved centered series is
+`xi (1 / 2 + z) = sum gamma(n) / n! * z^(2*n)`. Substitution by `I * z`
+gives the corresponding alternating series for `Xi`. The explicit
+`xiCoefficientSequenceOfEven` map reconstructs the raw sequence: odd entries
+are zero and entry `2*n` is
+`(-1)^n * (2*n)! / n! * gamma(n)`. For the canonical witness, this
+reconstruction is proved equal to `XiTaylorCoefficientSequence`.
 
 The Jensen RH wrappers construct the Laguerre-Polya certificate from the
 coefficient identity and Jensen hyperbolicity. They take
 `LaguerrePolyaZerosRealTheorem` as an explicit input, and reuse `Xi_nonzero` before deriving
 `AllZerosReal Xi`.
 
-The total-positivity branch is represented as a separate route into the Jensen branch over the same xi coefficient object:
+The total-positivity branch is represented as a separate route into the Jensen
+branch. It starts from the sign-correct centered-even object and reconstructs a
+raw `Xi` sequence before using the existing Jensen/Laguerre-Polya machinery:
 
 ```lean
 def PFInfinityToJensenHyperbolicity : Prop :=
-  forall gamma : XiCoefficientSequence,
-    IsXiCoefficientSequence gamma ->
+  forall gamma : XiEvenCoefficientSequence,
+    IsXiEvenCoefficientSequence gamma ->
       PFInfinitySequence gamma ->
-        AllJensenPolynomialsHyperbolic gamma
+        AllJensenPolynomialsHyperbolic
+          (xiCoefficientSequenceOfEven gamma)
 
-def ExistsXiCoefficientSequenceWithPFInfinity : Prop :=
-  exists gamma : XiCoefficientSequence,
-    IsXiCoefficientSequence gamma /\ PFInfinitySequence gamma
+def ExistsXiEvenCoefficientSequenceWithPFInfinity : Prop :=
+  exists gamma : XiEvenCoefficientSequence,
+    IsXiEvenCoefficientSequence gamma /\ PFInfinitySequence gamma
 ```
 
 These are also named research theorem boundaries. The PF-infinity interface
 records Toeplitz minor determinants explicitly for strictly increasing row and
-column index selections. The `PFInfinityToJensenHyperbolicity` boundary records
-the dependency edge from PF-infinity coefficients to Jensen hyperbolicity
-without duplicating Jensen polynomial definitions or adding a direct
-certificate-producing route.
+column index selections. The remaining
+`PFInfinityJensenZerosRealTheorem` names the exact finite zero-location claim
+for `JensenPolynomial (xiCoefficientSequenceOfEven gamma) n d`; this keeps the
+hard compatibility between sign-correct PF data and the raw Jensen objects
+visible rather than hiding it inside a coercion or certificate.

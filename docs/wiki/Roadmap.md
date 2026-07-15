@@ -42,9 +42,11 @@ Tracking issue: [#6](https://github.com/alexlopashev/rh-lol/issues/6).
 
 ## Milestone 6: Total Positivity Route
 
-Define PF-infinity sequences, Toeplitz minors, and the total-positivity edge into Jensen hyperbolicity.
+Define PF-infinity sequences and Toeplitz minors for the sign-correct
+centered-even `xi` coefficients, then connect them explicitly to Jensen
+hyperbolicity for the reconstructed raw `Xi` coefficient sequence.
 
-Status: started in [#7](https://github.com/alexlopashev/rh-lol/issues/7) with a minimal `RHLean.TotalPositivity.PFSequence` module. [#37](https://github.com/alexlopashev/rh-lol/issues/37) adds the named PF-infinity to Jensen boundary, and [#39](https://github.com/alexlopashev/rh-lol/issues/39) routes the public PF-infinity RH wrapper through that boundary.
+Status: started in [#7](https://github.com/alexlopashev/rh-lol/issues/7) with a minimal `RHLean.TotalPositivity.PFSequence` module. [#37](https://github.com/alexlopashev/rh-lol/issues/37) adds the named PF-infinity to Jensen boundary, and [#39](https://github.com/alexlopashev/rh-lol/issues/39) routes the public PF-infinity RH wrapper through that boundary. [#53](https://github.com/alexlopashev/rh-lol/issues/53) separates the sign-correct centered-even sequence from the alternating raw `Xi` Taylor sequence, proves their exact conversion, and moves the PF predicate to the even sequence. The finite PF-to-Jensen zero-location theorem remains an explicit research boundary.
 
 ## Milestone 7: Completed-Zeta Transfer Cleanup
 

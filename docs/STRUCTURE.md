@@ -33,13 +33,19 @@ scripts/
 
 `RHLean/RHBridge.lean` owns the theorem turning real zeros of `Xi` into Mathlib's `RiemannHypothesis`.
 
-`RHLean/XiCoefficients.lean` owns the shared exponential-generating coefficient interface for the `Xi` power series and its canonical Taylor-derivative witness.
+`RHLean/XiCoefficients.lean` owns both coefficient conventions: the raw
+exponential-generating Taylor sequence for `Xi`, the sign-correct centered-even
+sequence for `xi`, their proved series identities, and the exact reconstruction
+map between them.
 
 `RHLean/Jensen/Polynomial.lean` owns the Jensen polynomial route: Jensen polynomials, real hyperbolicity, the explicit normalized approximants, their locally uniform convergence proof, and the theorem from Jensen hyperbolicity to Laguerre-Polya membership for `Xi`.
 
 `RHLean/LaguerrePolya/Certificate.lean` owns the Laguerre-Polya class interface, the named pointwise/off-real locally-uniform zero-preservation boundaries, the public compatibility boundary that feeds the theorem from nonzero class membership to real zeros, and the proved `Xi_nonzero` fact used by the public RH wrappers.
 
-`RHLean/TotalPositivity/PFSequence.lean` owns the minimal total-positivity route: PF-infinity conditions, Toeplitz minor determinants, and the named bridge to Jensen hyperbolicity.
+`RHLean/TotalPositivity/PFSequence.lean` owns the minimal total-positivity route:
+PF-infinity conditions and Toeplitz minor determinants for the sign-correct
+centered-even sequence, plus the named finite boundary connecting those minors
+to Jensen hyperbolicity for the reconstructed raw `Xi` sequence.
 
 ## Later Modules
 
