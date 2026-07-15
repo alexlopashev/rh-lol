@@ -115,7 +115,9 @@ Deliverables:
 
 - Define PF-infinity sequences and Toeplitz minors.
 - Connect total positivity to Jensen hyperbolicity.
-- Relate the formal route to xi coefficient objects.
+- Use the sign-correct centered-even `xi` coefficients for total positivity,
+  while preserving the raw exponential-generating `Xi` sequence used by the
+  Jensen convergence theorem.
 
 Acceptance:
 
@@ -123,8 +125,8 @@ Acceptance:
 - It does not duplicate Jensen definitions unless the math demands it.
 
 Status: started in [#7](https://github.com/alexlopashev/rh-lol/issues/7) with a minimal `RHLean.TotalPositivity.PFSequence` module.
-[#31](https://github.com/alexlopashev/rh-lol/issues/31) adds the explicit
-existential coefficient boundary `ExistsXiCoefficientSequenceWithPFInfinity`.
+[#31](https://github.com/alexlopashev/rh-lol/issues/31) originally added an
+existential PF boundary over the raw `Xi` sequence.
 [#37](https://github.com/alexlopashev/rh-lol/issues/37) adds the named
 boundary `PFInfinityToJensenHyperbolicity`, making the PF-infinity to Jensen
 hyperbolicity edge explicit.
@@ -132,6 +134,14 @@ hyperbolicity edge explicit.
 PF-infinity RH wrapper through that Jensen edge and the existing
 Jensen-to-Laguerre-Polya membership bridge, with the Laguerre-Polya zero theorem
 still explicit and nonzero-`Xi` supplied internally.
+[#53](https://github.com/alexlopashev/rh-lol/issues/53) repairs the coefficient
+normalization: `PFInfinitySequence` now applies only to the canonical
+sign-correct centered-even sequence
+`n! / (2n)! * xi^(2n)(1 / 2)`. The raw `Xi` Taylor sequence is reconstructed
+with zero odd entries and alternating, factorial-rescaled even entries. The
+remaining `PFInfinityJensenZerosRealTheorem` explicitly owns the hard finite
+zero-location step for the reconstructed raw Jensen polynomials; it is not
+silently included in the coefficient notation.
 
 ## Milestone 7: Completed-Zeta Transfer Cleanup
 

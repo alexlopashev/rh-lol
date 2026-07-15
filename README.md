@@ -13,8 +13,8 @@ Xi has only real zeros
 The longer route is:
 
 ```text
-existence of Xi coefficients with PF-infinity
-  -> Jensen hyperbolicity for Xi coefficients
+PF-infinity for the sign-correct centered-even xi coefficients
+  -> Jensen hyperbolicity for the reconstructed raw Xi coefficients
   -> Laguerre-Polya membership for Xi
   -> proved nonzero Xi plus the named locally-uniform zero-preservation theorem
   -> Xi has only real zeros
@@ -28,10 +28,16 @@ Initial formal spine:
 - `RHLean.ZetaXi`: defines `xi` and `Xi`.
 - `RHLean.CriticalLine`: defines zeta-zero predicates and the critical-line coordinate lemma.
 - `RHLean.RHBridge`: proves the zeta-to-`Xi` transfer from completed zeta definitions, then proves `RH_of_Xi_real_zeros` from the real-zero hypothesis.
-- `RHLean.XiCoefficients`: defines the shared exponential-generating `Xi` coefficient interface and its canonical Taylor-derivative witness.
+- `RHLean.XiCoefficients`: distinguishes the raw exponential-generating `Xi`
+  Taylor sequence from the sign-correct centered-even `xi` sequence, proves the
+  two series identities and their exact sign/factor conversion, and reconstructs
+  the raw sequence from the even one.
 - `RHLean.Jensen.Polynomial`: defines the Jensen route, including the explicit `z / (d + 1)` normalization and the proved locally uniform convergence from the coefficient series.
 - `RHLean.LaguerrePolya.Certificate`: defines the Laguerre-Polya class interface, the nonzero-target predicate, proves `Xi_nonzero`, and records pointwise/off-real local-uniform zero-preservation boundaries plus the compatibility wrapper used by the public RH route.
-- `RHLean.TotalPositivity.PFSequence`: defines the minimal PF-infinity / Toeplitz-minor route, including its existential coefficient boundary and named bridge to Jensen hyperbolicity.
+- `RHLean.TotalPositivity.PFSequence`: attaches PF-infinity and Toeplitz minors
+  only to the sign-correct centered-even sequence, then exposes the remaining
+  named finite zero-location boundary for the reconstructed raw `Xi` Jensen
+  polynomials.
 
 ## Setup
 

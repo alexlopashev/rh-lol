@@ -8,12 +8,13 @@ import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Order.Monotone.Defs
 
 /-!
-# Total positivity route for Xi coefficients
+# Total positivity route for sign-correct even xi coefficients
 
 This file records a minimal Polya-frequency / total-positivity branch of the
-dependency graph.  The interface deliberately reuses the existing `Xi`
-coefficient sequence and Jensen-polynomial route instead of creating a parallel
-RH route.
+dependency graph.  Toeplitz minors are attached only to the sign-correct even
+coefficient sequence.  The explicit `xiCoefficientSequenceOfEven` map then
+connects that sequence to the existing raw `Xi` Jensen-polynomial route instead
+of asserting PF-infinity for the alternating raw Taylor sequence.
 -/
 
 noncomputable section
@@ -29,7 +30,7 @@ def IsIncreasingNatSelection {k : Nat} (indices : Fin k → Nat) : Prop :=
   StrictMono indices
 
 /-- Entry of the one-sided Toeplitz matrix attached to a coefficient sequence. -/
-def toeplitzEntry (γ : XiCoefficientSequence) (row col : Nat) : Complex :=
+def toeplitzEntry (γ : XiEvenCoefficientSequence) (row col : Nat) : Complex :=
   if col ≤ row then γ (row - col) else 0
 
 /-- A finite Toeplitz submatrix selected by row and column index maps.
@@ -38,13 +39,13 @@ The determinant of this matrix is the Mathlib matrix determinant used for
 Toeplitz minors in the PF-infinity interface below.
 -/
 def toeplitzMinorMatrix
-    (γ : XiCoefficientSequence) {k : Nat} (rows cols : Fin k → Nat) :
+    (γ : XiEvenCoefficientSequence) {k : Nat} (rows cols : Fin k → Nat) :
     Matrix (Fin k) (Fin k) Complex :=
   fun i j => toeplitzEntry γ (rows i) (cols j)
 
 /-- The determinant of a finite Toeplitz submatrix. -/
 def toeplitzMinor
-    (γ : XiCoefficientSequence) {k : Nat} (rows cols : Fin k → Nat) : Complex :=
+    (γ : XiEvenCoefficientSequence) {k : Nat} (rows cols : Fin k → Nat) : Complex :=
   (toeplitzMinorMatrix γ rows cols).det
 
 /-- Conservative PF-infinity interface for a coefficient sequence.
@@ -52,40 +53,60 @@ def toeplitzMinor
 This placeholder asks every finite Toeplitz minor selected by strictly
 increasing row and column index maps to be a nonnegative real complex number.
 -/
-def PFInfinitySequence (γ : XiCoefficientSequence) : Prop :=
+def PFInfinitySequence (γ : XiEvenCoefficientSequence) : Prop :=
   ∀ k : Nat, ∀ rows cols : Fin k → Nat,
     IsIncreasingNatSelection rows →
       IsIncreasingNatSelection cols →
         IsNonnegativeRealComplex (toeplitzMinor γ rows cols)
 
-/-- There exists an `Xi` coefficient sequence satisfying the PF-infinity condition. -/
-def ExistsXiCoefficientSequenceWithPFInfinity : Prop :=
-  ∃ γ : XiCoefficientSequence, IsXiCoefficientSequence γ ∧ PFInfinitySequence γ
+/-- There exists a sign-correct centered-even xi sequence satisfying PF-infinity. -/
+def ExistsXiEvenCoefficientSequenceWithPFInfinity : Prop :=
+  ∃ γ : XiEvenCoefficientSequence, IsXiEvenCoefficientSequence γ ∧ PFInfinitySequence γ
+
+/--
+The ordinary Jensen polynomial of the sign-correct even sequence.  This is the
+object whose coefficients are directly controlled by singleton Toeplitz
+minors; it is kept distinct from the raw `Xi` Jensen polynomial below.
+-/
+def SignCorrectedEvenJensenPolynomial
+    (γ : XiEvenCoefficientSequence) (n d : Nat) : Polynomial Complex :=
+  JensenPolynomial (fun m : Nat => γ m) n d
+
+/--
+The existing raw `Xi` Jensen polynomial reconstructed from sign-correct even
+coefficients.  This is the exact object consumed by the discharged
+Jensen-to-Laguerre-Polya theorem.
+-/
+def XiJensenPolynomialOfEven
+    (γ : XiEvenCoefficientSequence) (n d : Nat) : Polynomial Complex :=
+  JensenPolynomial (xiCoefficientSequenceOfEven γ) n d
 
 /-- The hard boundary from PF-infinity Xi coefficients to Jensen hyperbolicity. -/
 def PFInfinityToJensenHyperbolicity : Prop :=
-  ∀ γ : XiCoefficientSequence,
-    IsXiCoefficientSequence γ →
+  ∀ γ : XiEvenCoefficientSequence,
+    IsXiEvenCoefficientSequence γ →
       PFInfinitySequence γ →
-        AllJensenPolynomialsHyperbolic γ
+        AllJensenPolynomialsHyperbolic (xiCoefficientSequenceOfEven γ)
 
 /--
 Finite Polya-frequency zero-location theorem needed after the real-coefficient
 bookkeeping is discharged below.
 
 This is narrower than `PFInfinityToJensenHyperbolicity`: it no longer mentions
-`Xi`, `IsXiCoefficientSequence`, or the real-coefficient part of hyperbolicity.
-It is the remaining ASW/PF theorem for the current one-sided Toeplitz-minor
-normalization and the binomially weighted Jensen polynomials.
+the centered `xi` series identity or the real-coefficient part of
+hyperbolicity.  It is the remaining ASW/PF theorem for the current one-sided
+Toeplitz-minor normalization and the exact raw `Xi` Jensen polynomials obtained
+through `xiCoefficientSequenceOfEven`.  Thus the nontrivial compatibility with
+the existing Jensen route is visible here rather than hidden in notation.
 -/
 def PFInfinityJensenZerosRealTheorem : Prop :=
-  ∀ γ : XiCoefficientSequence,
+  ∀ γ : XiEvenCoefficientSequence,
     PFInfinitySequence γ →
-      ∀ n d : Nat, PolynomialZerosReal (JensenPolynomial γ n d)
+      ∀ n d : Nat, PolynomialZerosReal (XiJensenPolynomialOfEven γ n d)
 
 /-- Apply a PF-infinity hypothesis to one increasing Toeplitz minor selection. -/
 theorem PFInfinitySequence.toeplitzMinor_nonnegative
-    {γ : XiCoefficientSequence}
+    {γ : XiEvenCoefficientSequence}
     (hPF : PFInfinitySequence γ)
     {k : Nat} {rows cols : Fin k → Nat}
     (hrows : IsIncreasingNatSelection rows)
@@ -103,7 +124,7 @@ private theorem strictMono_fin_one_nat (indices : Fin 1 → Nat) :
 
 /-- The `1 × 1` Toeplitz minor with row `n` and column `0` is the coefficient `γ n`. -/
 theorem toeplitzMinor_singleton_coeff
-    (γ : XiCoefficientSequence) (n : Nat) :
+    (γ : XiEvenCoefficientSequence) (n : Nat) :
     toeplitzMinor γ (fun _ : Fin 1 => n) (fun _ : Fin 1 => 0) = γ n := by
   simp [toeplitzMinor, toeplitzMinorMatrix, toeplitzEntry]
 
@@ -112,16 +133,17 @@ The `j`th Jensen coefficient is the binomial weight times the singleton
 Toeplitz minor selecting the shifted coefficient `γ (n + j)`.
 -/
 theorem coeff_JensenPolynomial_eq_choose_mul_toeplitzMinor_singleton
-    (γ : XiCoefficientSequence) (n d j : Nat) (hj : j ≤ d) :
-    (JensenPolynomial γ n d).coeff j =
+    (γ : XiEvenCoefficientSequence) (n d j : Nat) (hj : j ≤ d) :
+    (SignCorrectedEvenJensenPolynomial γ n d).coeff j =
       ((Nat.choose d j : Nat) : Complex) *
         toeplitzMinor γ (fun _ : Fin 1 => n + j) (fun _ : Fin 1 => 0) := by
-  rw [coeff_JensenPolynomial_of_le γ n d j hj]
+  rw [SignCorrectedEvenJensenPolynomial,
+    coeff_JensenPolynomial_of_le (fun m : Nat => γ m) n d j hj]
   rw [toeplitzMinor_singleton_coeff]
 
 /-- A PF-infinity coefficient sequence has nonnegative-real coefficients. -/
 theorem PFInfinitySequence.coeff_nonnegative
-    {γ : XiCoefficientSequence}
+    {γ : XiEvenCoefficientSequence}
     (hPF : PFInfinitySequence γ)
     (n : Nat) :
     IsNonnegativeRealComplex (γ n) := by
@@ -135,7 +157,7 @@ theorem PFInfinitySequence.coeff_nonnegative
 
 /-- A PF-infinity coefficient has zero imaginary part. -/
 theorem PFInfinitySequence.coeff_im_eq_zero
-    {γ : XiCoefficientSequence}
+    {γ : XiEvenCoefficientSequence}
     (hPF : PFInfinitySequence γ)
     (n : Nat) :
     (γ n).im = 0 :=
@@ -143,28 +165,40 @@ theorem PFInfinitySequence.coeff_im_eq_zero
 
 /-- The real part of a PF-infinity coefficient is nonnegative. -/
 theorem PFInfinitySequence.coeff_re_nonnegative
-    {γ : XiCoefficientSequence}
+    {γ : XiEvenCoefficientSequence}
     (hPF : PFInfinitySequence γ)
     (n : Nat) :
     0 ≤ (γ n).re :=
   (hPF.coeff_nonnegative n).2
 
 /--
-PF-infinity supplies the real-coefficient part of Jensen hyperbolicity.
+PF-infinity supplies the real-coefficient part of the reconstructed raw `Xi`
+Jensen hyperbolicity.
 
 The only remaining finite theorem is zero-location for the binomially weighted
 Jensen polynomial; see `PFInfinityJensenZerosRealTheorem`.
 -/
 theorem hasRealCoefficients_JensenPolynomial_of_pfInfinity
-    {γ : XiCoefficientSequence}
+    {γ : XiEvenCoefficientSequence}
     (hPF : PFInfinitySequence γ)
     (n d : Nat) :
-    HasRealCoefficients (JensenPolynomial γ n d) := by
+    HasRealCoefficients (XiJensenPolynomialOfEven γ n d) := by
+  have hraw (m : Nat) : (xiCoefficientSequenceOfEven γ m).im = 0 := by
+    rcases Nat.even_or_odd' m with ⟨k, rfl | rfl⟩
+    · have hsign : (((-1 : Complex) ^ k).im) = 0 := by
+        induction k with
+        | zero => simp
+        | succ k ih => simp [pow_succ, ih]
+      simp [Complex.mul_im, Complex.inv_im, hPF.coeff_im_eq_zero, hsign]
+    · simp
   intro j
   by_cases hj : j ≤ d
-  · rw [coeff_JensenPolynomial_of_le γ n d j hj]
-    simp [Complex.mul_im, hPF.coeff_im_eq_zero (n + j)]
-  · rw [coeff_JensenPolynomial_eq_zero_of_gt γ n d j (Nat.lt_of_not_ge hj)]
+  · rw [XiJensenPolynomialOfEven,
+      coeff_JensenPolynomial_of_le (xiCoefficientSequenceOfEven γ) n d j hj]
+    simp [Complex.mul_im, hraw (n + j)]
+  · rw [XiJensenPolynomialOfEven,
+      coeff_JensenPolynomial_eq_zero_of_gt
+        (xiCoefficientSequenceOfEven γ) n d j (Nat.lt_of_not_ge hj)]
     simp
 
 /--
@@ -182,10 +216,10 @@ theorem pfInfinityToJensenHyperbolicity_of_jensenZerosReal
 /-- Apply the named PF-infinity to Jensen hyperbolicity boundary. -/
 theorem allJensenPolynomialsHyperbolic_of_pfInfinity
     (hbridge : PFInfinityToJensenHyperbolicity)
-    {γ : XiCoefficientSequence}
-    (hγ : IsXiCoefficientSequence γ)
+    {γ : XiEvenCoefficientSequence}
+    (hγ : IsXiEvenCoefficientSequence γ)
     (hPF : PFInfinitySequence γ) :
-    AllJensenPolynomialsHyperbolic γ :=
+    AllJensenPolynomialsHyperbolic (xiCoefficientSequenceOfEven γ) :=
   hbridge γ hγ hPF
 
 /--
@@ -195,20 +229,20 @@ Laguerre-Polya membership bridge, and the explicit Laguerre-Polya zero theorem.
 theorem RH_from_PFInfinity_via_Jensen_Xi
     (hPFToJensen : PFInfinityToJensenHyperbolicity)
     (hzeros : LaguerrePolyaZerosRealTheorem)
-    {γ : XiCoefficientSequence}
-    (hγ : IsXiCoefficientSequence γ)
+    {γ : XiEvenCoefficientSequence}
+    (hγ : IsXiEvenCoefficientSequence γ)
     (hPF : PFInfinitySequence γ) :
     RiemannHypothesis :=
   RH_from_JensenHyperbolicity_Xi
     hzeros
-    hγ
+    (isXiCoefficientSequence_xiCoefficientSequenceOfEven hγ)
     (allJensenPolynomialsHyperbolic_of_pfInfinity hPFToJensen hγ hPF)
 
 /-- The existential PF-infinity route factors through Jensen hyperbolicity. -/
-theorem RH_from_exists_XiCoefficientSequenceWithPFInfinity_via_Jensen
+theorem RH_from_exists_XiEvenCoefficientSequenceWithPFInfinity_via_Jensen
     (hPFToJensen : PFInfinityToJensenHyperbolicity)
     (hzeros : LaguerrePolyaZerosRealTheorem)
-    (hcoeffs : ExistsXiCoefficientSequenceWithPFInfinity) :
+    (hcoeffs : ExistsXiEvenCoefficientSequenceWithPFInfinity) :
     RiemannHypothesis :=
   match hcoeffs with
   | ⟨_, hγ, hPF⟩ =>
